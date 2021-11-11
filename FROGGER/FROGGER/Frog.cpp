@@ -1,14 +1,15 @@
 #include "Frog.h"
 //#include <SFML/Graphics.hpp>
 
-GameManager::Frog::Frog::Frog(sf::CircleShape frogShape, Position pos)
+GameManager::Frog::Frog::Frog(sf::CircleShape frogShape, Vector2 pos, float speed)
 {
 	this->frogShape = frogShape;
 	this->pos = pos;
+	this->speed = speed;
 
 }
 
-Position GameManager::Frog::Frog::GetPosition()
+Vector2 GameManager::Frog::Frog::GetPosition()
 {
 	return pos;
 }
@@ -28,19 +29,19 @@ void GameManager::Frog::Frog::Move(sf::RenderWindow& window)
 	frogShape.setPosition(pos.x, pos.y);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		pos.y-=0.1;
+		pos.y-=speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		pos.x -= 0.1;
+		pos.x -= speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		pos.y += 0.1;
+		pos.y += speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		pos.x += 0.1;
+		pos.x += speed;
 	}
 	
 }

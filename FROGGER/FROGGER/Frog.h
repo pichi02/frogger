@@ -1,10 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-struct Position
-{
-	float x;
-	float y;
-};
+#include"Vector2.h"
 namespace GameManager 
 {
 	namespace Frog 
@@ -13,17 +9,17 @@ namespace GameManager
 		class Frog
 		{
 		private:
-			Position pos;
+			Vector2 pos;
 			float speed;
 			sf::CircleShape frogShape;
 			
 			
 			
 		public:
-			Frog(sf::CircleShape frogShape,Position pos);
+			Frog(sf::CircleShape frogShape,Vector2 pos, float speed);
 			~Frog();
 			
-			Position GetPosition();
+			Vector2 GetPosition();
 			float GetSpeed();
 			sf::CircleShape GetFrogShape();
 			void Move(sf::RenderWindow& window);

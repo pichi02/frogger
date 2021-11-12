@@ -22,7 +22,14 @@ namespace GameManager
 			Vector2 GetPosition();
 			float GetSpeed();
 			sf::CircleShape GetFrogShape();
-			void Move(sf::RenderWindow& window);
+			void MoveUp();
+
+			void MoveDown();
+
+			void MoveLeft();
+
+			void MoveRight();
+			void Draw();
 		
 		};
 

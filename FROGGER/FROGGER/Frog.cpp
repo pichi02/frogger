@@ -6,6 +6,7 @@ GameManager::Frog::Frog::Frog(sf::CircleShape frogShape, Vector2 pos, float spee
 	this->frogShape = frogShape;
 	this->pos = pos;
 	this->speed = speed;
+	
 
 }
 
@@ -24,26 +25,24 @@ sf::CircleShape GameManager::Frog::Frog::GetFrogShape()
 	return frogShape;
 }
 
-void GameManager::Frog::Frog::Move(sf::RenderWindow& window)
+void GameManager::Frog::Frog::MoveUp()
+{
+	pos.y -= speed;
+}
+void GameManager::Frog::Frog::MoveDown()
+{
+	pos.y += speed;
+}
+void GameManager::Frog::Frog::MoveLeft()
+{
+	pos.x -= speed;
+}
+void GameManager::Frog::Frog::MoveRight()
+{
+	pos.x += speed;
+}
+void  GameManager::Frog::Frog::Draw()
 {
 	frogShape.setPosition(pos.x, pos.y);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		pos.y-=speed;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		pos.x -= speed;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		pos.y += speed;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		pos.x += speed;
-	}
-	
 }
-
 

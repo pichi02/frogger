@@ -14,12 +14,13 @@ namespace GameManager
 		int screenHeight = 600;
 		float speedVariation = 0.05f;
 		const int carsCount = 4;
+		bool gameOver = false;
 		sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "FROGGER");
-		sf::CircleShape circle(10);
+		sf::RectangleShape frogRect({18.0f,18.0f});
 		sf::RectangleShape rect({ 40.0f ,17.0f });
-		circle.setFillColor(sf::Color::Green);
+		frogRect.setFillColor(sf::Color::Green);
 		rect.setFillColor(sf::Color::Blue);
-		Frog::Frog* frog = new Frog::Frog(circle, { screenWidth / 2 - (circle.getRadius()), screenHeight * 0.87f }, 30.3f);
+		Frog::Frog* frog = new Frog::Frog(frogRect, { screenWidth / 2 -frogRect.getSize().x/2,screenHeight * 0.87f }, 30.3f);
 		Car::Car* car[carsCount];/* = new Car::Car(rect, { screenWidth / 2.0f, screenHeight/2.0f }, 0.15);*/
 		for (int i = 0; i < carsCount; i++)
 		{
@@ -35,7 +36,7 @@ namespace GameManager
 		}
 
 
-		while (window.isOpen())
+		while (window.isOpen()&&!gameOver)
 		{
 			sf::Event event;
 			while (window.pollEvent(event))
@@ -74,6 +75,11 @@ namespace GameManager
 			{
 				car[i]->Move(screenWidth);
 				window.draw(car[i]->GetCarShape());
+				if (frog->Collision(car[i]->GetCarShape()))
+				{
+					gameOver = true;
+				}
+				
 
 			}
 

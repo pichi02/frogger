@@ -11,17 +11,17 @@ namespace GameManager
 		private:
 			Vector2 pos;
 			float speed;
-			sf::CircleShape frogShape;
+			sf::RectangleShape frogShape;
 			
 			
 			
 		public:
-			Frog(sf::CircleShape frogShape,Vector2 pos, float speed);
+			Frog(sf::RectangleShape frogShape,Vector2 pos, float speed);
 			~Frog();
 			
 			Vector2 GetPosition();
 			float GetSpeed();
-			sf::CircleShape GetFrogShape();
+			sf::RectangleShape GetFrogShape();
 			void MoveUp();
 
 			void MoveDown();
@@ -30,6 +30,8 @@ namespace GameManager
 
 			void MoveRight();
 			void Draw();
+
+			bool Collision(sf::RectangleShape rect);
 		
 		};
 

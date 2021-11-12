@@ -19,11 +19,19 @@ namespace GameManager
 		sf::RectangleShape rect({ 40.0f ,17.0f });
 		circle.setFillColor(sf::Color::Green);
 		rect.setFillColor(sf::Color::Blue);
-		Frog::Frog* frog = new Frog::Frog(circle, { screenWidth / 2 - (circle.getRadius()), screenHeight * 0.9f }, 30.0f);
+		Frog::Frog* frog = new Frog::Frog(circle, { screenWidth / 2 - (circle.getRadius()), screenHeight * 0.87f }, 30.3f);
 		Car::Car* car[carsCount];/* = new Car::Car(rect, { screenWidth / 2.0f, screenHeight/2.0f }, 0.15);*/
 		for (int i = 0; i < carsCount; i++)
 		{
-			car[i] = new Car::Car(rect, { screenWidth / 2.0f, screenHeight / 1.5f + i * screenHeight * 0.05f }, 0.15 + i * speedVariation);
+			if (i%2==0)
+			{
+				car[i] = new Car::Car(rect, { screenWidth / 2.0f, screenHeight / 1.5f + i * screenHeight * 0.05f }, 0.15+i*speedVariation );
+			}
+			else
+			{
+				car[i] = new Car::Car(rect, { screenWidth / 2.0f, screenHeight / 1.5f + i * screenHeight * 0.05f }, -0.15 - i * speedVariation);
+			}
+			
 		}
 
 

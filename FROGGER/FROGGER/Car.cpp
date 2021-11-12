@@ -26,8 +26,12 @@ void GameManager::Car::Car::Move(int screenWidth)
 {
 	carShape.setPosition(pos.x, pos.y);
 	pos.x -= speed;
-	if (pos.x<0)
+	if (pos.x+carShape.getSize().x<0)
 	{
 		pos.x = screenWidth;
+	}
+	else if (pos.x> screenWidth)
+	{
+		pos.x = 0;
 	}
 }

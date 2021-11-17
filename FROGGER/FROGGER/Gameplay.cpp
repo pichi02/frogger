@@ -10,7 +10,7 @@ namespace GameManager
 		float speedVariation;
 		int screenWidth = 800;
 		int screenHeight = 600;
-		bool gameOver = false;
+		extern bool gameOver = false;
 		sf::RectangleShape frogRect({ 18.0f,18.0f });
 		sf::RectangleShape rect({ 40.0f ,17.0f });
 		Frog::Frog* frog;

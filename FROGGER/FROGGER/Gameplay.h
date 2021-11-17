@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
 namespace GameManager
 {
 	namespace Gameplay
@@ -12,6 +13,7 @@ namespace GameManager
 		void UnloadGameplay();
 		extern int screenWidth;
 		extern int screenHeight;
+
 		extern bool gameOver;
 	}
 

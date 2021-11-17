@@ -6,8 +6,6 @@ GameManager::Frog::Frog::Frog(sf::RectangleShape frogShape, Vector2 pos, float s
 	this->frogShape = frogShape;
 	this->pos = pos;
 	this->speed = speed;
-	
-
 }
 
 Vector2 GameManager::Frog::Frog::GetPosition()

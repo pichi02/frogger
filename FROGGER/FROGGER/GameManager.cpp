@@ -1,16 +1,17 @@
 #include <SFML/Graphics.hpp>
-#include"GameManager.h"
-//#include"Gameplay.h"
-//#include"Frog.h"
-//#include"Car.h"
-#include"Menu.h"
-#include"Gameplay.h"
+
+#include "GameManager.h"
+#include"Frog.h"
+#include"Car.h"
+#include "Menu.h"
+#include "Gameplay.h"
 
 using namespace Gamemanager::menu;
 
 namespace GameManager
 {
-	extern bool gameOver;
+	using namespace Gameplay;
+
 	void GameManager()
 	{
 		int screenWidth = 800;
@@ -20,7 +21,7 @@ namespace GameManager
 		sf::RenderWindow GameWindow(sf::VideoMode(screenWidth, screenHeight), "FROGGER");
 		Menu Menu(GameWindow.getSize().x, GameWindow.getSize().y);
 		GameManager::Gameplay::InitValues();
-		while (GameWindow.isOpen()/*&&!gameOver*/)
+		while (GameWindow.isOpen() && !gameOver)
 		{
 			sf::Event event;
 			while (GameWindow.pollEvent(event))

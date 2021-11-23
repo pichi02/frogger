@@ -2,5 +2,5 @@
 
 int main()
 {
-	GameManager::GameManager();
+	GameManager::ExecuteGame();
 }

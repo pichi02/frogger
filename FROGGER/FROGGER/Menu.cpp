@@ -1,104 +1,149 @@
 #include "Menu.h"
+#include "GameManager.h"
 
 namespace Gamemanager
 {
 	namespace menu
 	{
-		Menu::Menu(float width, float height)
+		extern int screenWidth = 800;
+		extern int screenHeight = 600;
+		static char text1[] = "JUGAR";
+		static char text2[] = "SONIDO";
+		static char text3[] = "CREDITOS";
+		static char text4[] = "SALIR";
+		static char text5[] = "V 1.0";
+		static int sizeText2 = 0;
+		static int sizeText3 = 0;
+		static int text1PositionX = 0;
+		static int text1PositionY = 0;
+		static int text2PositionX = 0;
+		static int text2PositionY = 0;
+		static int text3PositionX = 0;
+		static int text3PositionY = 0;
+		static int text4PositionX = 0;
+		static int text4PositionY = 0;
+		static int text5PositionX = 0;
+		static int text5PositionY = 0;
+		static sf::Vector2i mousePoint;
+		static sf::FloatRect mouseRect;
+		static sf::RectangleShape rect1;
+		static sf::RectangleShape rect2;
+		static sf::RectangleShape rect3;
+		static sf::RectangleShape rect4;
+
+		static int halfScreenWidth = 0;
+		static int halfScreenHeight = 0;
+
+		//static sf::Image menuImage;
+		//static sf::Texture menuImageTexture;
+		static float scaleBackground;
+
+		void InitMenu()
 		{
-			/*if (!font.loadFromFile("Fonts/AlexandriaFLF.ttf"))
-			{
-				std::cout << "No font in here" << std::endl;
-			}*/
+			//menuImage.loadFromFile("../res/backgroundMenu.png");
+			//menuImageTexture = LoadTextureFromImage(menuImage);
+			halfScreenWidth = screenWidth / 2;
+			halfScreenHeight = screenHeight / 2;
 
-			//Play
-			menu[0].setPosition(400, 200);
-			menu[0].setFillColor(sf::Color::White);
-			menu[0].setSize({100, 70});
+			/*sizeText2 = (screenWidth * 20) / scaleAux1;
+			sizeText3 = (screenWidth * 15) / scaleAux1;
+			text1PositionX = halfScreenWidth - MeasureText(text1, sizeText2) / 2;
+			text1PositionY = halfScreenHeight + GetScreenHeight() * 0.0333333;
+			text2PositionX = halfScreenWidth - MeasureText(text2, sizeText2) / 2;
+			text2PositionY = halfScreenHeight + GetScreenHeight() * 0.1333333;
+			text3PositionX = halfScreenWidth - MeasureText(text3, sizeText2) / 2;
+			text3PositionY = halfScreenHeight + GetScreenHeight() * 0.2333333;
+			text4PositionX = halfScreenWidth - MeasureText(text4, sizeText2) / 2;
+			text4PositionY = halfScreenHeight + GetScreenHeight() * 0.3333333;
+			text5PositionX = GetScreenWidth() * 0.05;
+			text5PositionY = GetScreenHeight() * 0.95;*/
 
-			menu[1].setPosition(400, 300);
-			menu[1].setFillColor(sf::Color::White);
-			menu[1].setSize({ 100, 70 });
+			rect1.setFillColor(sf::Color::Red);
+			rect2.setFillColor(sf::Color::Red);
+			rect3.setFillColor(sf::Color::Red);
+			rect4.setFillColor(sf::Color::Red);
 
-			menu[2].setPosition(400, 400);
-			menu[2].setFillColor(sf::Color::White);
-			menu[2].setSize({ 100, 70 });
+			rect1.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
+			rect1.setPosition(halfScreenWidth - rect1.getSize().x / 2, halfScreenHeight + screenHeight * 0.11);
 
-			menu[3].setPosition(400, 500);
-			menu[3].setFillColor(sf::Color::White);
-			menu[3].setSize({ 100, 70 });
-			//mainMenu[0].setFont(font);
-			/*mainMenu[0].setFillColor(sf::Color::White);
-			mainMenu[0].setString("Play");
-			mainMenu[0].setCharacterSize(70);
-			mainMenu[0].setPosition(400, 200);
-			//Options
-			//mainMenu[1].setFont(font);
-			mainMenu[1].setFillColor(sf::Color::White);
-			mainMenu[1].setString("Options");
-			mainMenu[1].setCharacterSize(70);
-			mainMenu[1].setPosition(400, 300);
-			//Credits
-			//mainMenu[2].setFont(font);
-			mainMenu[2].setFillColor(sf::Color::White);
-			mainMenu[2].setString("Credits");
-			mainMenu[2].setCharacterSize(70);
-			mainMenu[2].setPosition(400, 400);
-			//Exit
-			//mainMenu[3].setFont(font);
-			mainMenu[3].setFillColor(sf::Color::White);
-			mainMenu[3].setString("Credits");
-			mainMenu[3].setCharacterSize(70);
-			mainMenu[3].setPosition(400, 500);*/
+			rect2.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
+			rect2.setPosition(halfScreenWidth - rect2.getSize().x / 2, halfScreenHeight + screenHeight * 0.21);
 
-			menuSelected = -1;
+			rect3.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
+			rect3.setPosition(halfScreenWidth - rect3.getSize().x / 2, halfScreenHeight + screenHeight * 0.31);
+
+			rect4.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
+			rect4.setPosition(halfScreenWidth - rect4.getSize().x / 2, halfScreenHeight + screenHeight * 0.01);
+
+			//scaleBackground = (GetScreenWidth() * 1.0f) / scaleAux3;
 		}
 
-		Menu::~Menu()
+		void UpdateMenu(sf::RenderWindow& rWindow)
 		{
+			mousePoint = sf::Mouse::getPosition(rWindow);
+			mousePoint = (sf::Vector2i)rWindow.mapPixelToCoords(mousePoint);
+			sf::FloatRect mouseRect(sf::Vector2f(mousePoint), { 32, 32 });
 
-		}
-
-		void Menu::DrawMenu(sf::RenderWindow& window)
-		{
-			for (int i = 0; i < max_main_menu; i++)
+			if (rect1.getGlobalBounds().intersects(mouseRect))
 			{
-				window.draw(menu[i]);
-			}
-		}
+				rect1.setFillColor(sf::Color::Blue);
 
-		void Menu::MoveUp()
-		{
-			if (menuSelected - 1 >= 0)
-			{
-				menu[menuSelected].setFillColor(sf::Color::White);
-
-				menuSelected--;
-				if (menuSelected == -1)
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					menuSelected = 2;
+					//mute = !mute;
 				}
-				menu[menuSelected].setFillColor(sf::Color::Blue);
 			}
-		}
+			else rect1.setFillColor(sf::Color::Red);
 
-		void Menu::MoveDown()
-		{
-			if (menuSelected + 1 <= max_main_menu)
+			if (rect2.getGlobalBounds().intersects(mouseRect))
 			{
-				menu[menuSelected].setFillColor(sf::Color::White);
-				menuSelected++;
-				if (menuSelected == 4)
+				rect2.setFillColor(sf::Color::Blue);
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					menuSelected = 0;
+					UnloadMenu();
+					GameManager::currentScreen = GameManager::MENU;
 				}
-				menu[menuSelected].setFillColor(sf::Color::Blue);
 			}
+			else rect2.setFillColor(sf::Color::Red);
+
+			if (rect3.getGlobalBounds().intersects(mouseRect))
+			{
+				rect3.setFillColor(sf::Color::Blue);
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					//exit = true;
+				}
+			}
+			else rect3.setFillColor(sf::Color::Red);
+
+			if (rect4.getGlobalBounds().intersects(mouseRect))
+			{
+				rect4.setFillColor(sf::Color::Blue);
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					UnloadMenu();
+					//InitValues();
+					GameManager::currentScreen = GameManager::GAMEPLAY;
+				}
+			}
+			else rect4.setFillColor(sf::Color::Red);
 		}
 
-		int Menu::MenuPressed()
+		void DrawMenu(sf::RenderWindow& window)
 		{
-			return menuSelected;
+			window.draw(rect1);
+			window.draw(rect2);
+			window.draw(rect3);
+			window.draw(rect4);
+		}
+
+		void UnloadMenu()
+		{
+			//UnloadTexture(menuImageTexture);
+			//UnloadImage(menuImage);
 		}
 	}
 }

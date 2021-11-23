@@ -6,21 +6,24 @@
 #include "Menu.h"
 #include "Gameplay.h"
 
-using namespace Gamemanager::menu;
-
 namespace GameManager
 {
 	using namespace Gameplay;
+	int screenWidth = 800;
+	int screenHeight = 600;
+
+	screens currentScreen = MENU;
+
+	void InitGame()
+	{
+		GameManager::Gameplay::InitValues();
+		Gamemanager::menu::InitMenu();
+	}
 
 	void GameManager()
 	{
-		int screenWidth = 800;
-		int screenHeight = 600;
+		sf::RenderWindow GameWindow(sf::VideoMode(GameManager::screenWidth, GameManager::screenHeight), "FROGGER");
 
-
-		sf::RenderWindow GameWindow(sf::VideoMode(screenWidth, screenHeight), "FROGGER");
-		Menu Menu(GameWindow.getSize().x, GameWindow.getSize().y);
-		GameManager::Gameplay::InitValues();
 		while (GameWindow.isOpen() && !gameOver)
 		{
 			sf::Event event;
@@ -29,36 +32,44 @@ namespace GameManager
 				if (event.type == sf::Event::Closed)
 				{
 					GameWindow.close();
+					
 				}
-
-				/*if (event.type == sf::Event::KeyReleased)
-				{
-					if (event.key.code == sf::Keyboard::Up)
-					{
-						Menu.MoveUp();
-						break;
-					}
-
-					if (event.key.code == sf::Keyboard::Down)
-					{
-						Menu.MoveDown();
-						break;
-					}
-
-					if (event.key.code == sf::Keyboard::Return)
-					{
-						int x = Menu.MenuPressed();
-					}
-
-				}*/
-				GameManager::Gameplay::UpdateFrog(GameWindow, event);
 			}
+
 			GameWindow.clear();
-			GameManager::Gameplay::UpdateCar(GameWindow, event);
-			GameManager::Gameplay::Draw(GameWindow);
+			switch (currentScreen)
+			{
+			case GameManager::MENU:
+				Gamemanager::menu::UpdateMenu(GameWindow);
+				Gamemanager::menu::DrawMenu(GameWindow);
+				break;
+			case GameManager::GAMEPLAY:
+
+				GameManager::Gameplay::UpdateFrog(GameWindow, event);
+
+				GameManager::Gameplay::UpdateCar(GameWindow, event);
+				GameManager::Gameplay::Draw(GameWindow);
+				break;
+			case GameManager::GAMEOVER:
+				break;
+			case GameManager::CREDITS:
+				break;
+			case GameManager::PAUSE:
+				break;
+			default:
+				break;
+			}
+
 			GameWindow.display();
 		}
+	}
 
-		
+	void ExecuteGame()
+	{
+		InitGame();
+		while (true)
+		{
+			GameManager();
+		}
 	}
 }

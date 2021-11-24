@@ -9,6 +9,7 @@ namespace GameManager
 		class Frog
 		{
 		private:
+			int lifes;
 			Vector2 pos;
 			float speed;
 			sf::RectangleShape frogShape;
@@ -25,13 +26,14 @@ namespace GameManager
 			void MoveUp();
 
 			void MoveDown();
-
+			int GetLifes();
 			void MoveLeft();
 
 			void MoveRight();
 			void Draw();
-
+			void SetPosition(Vector2 pos);
 			bool Collision(sf::RectangleShape rect);
+			void SubstractLife();
 		
 		};
 

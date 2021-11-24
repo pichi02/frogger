@@ -6,7 +6,7 @@ namespace GameManager
 	namespace Gameplay
 	{
 		void InitValues();
-		void UpdateCar(sf::RenderWindow &window, sf::Event &event);
+		void UpdateRects(sf::RenderWindow &window, sf::Event &event);
 		void Draw(sf::RenderWindow& window);
 		void UpdateFrog(sf::RenderWindow& window, sf::Event& event);
 		void ResetValues();

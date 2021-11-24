@@ -1,32 +1,36 @@
 #include "Car.h"
 
-GameManager::Car::Car::Car(sf::RectangleShape carShape, Vector2 pos, float speed)
+GameManager::Rect::Rect::Rect(sf::RectangleShape rectShape, Vector2 pos, float speed)
 {
 	this->pos = pos;
-	this->carShape = carShape;
+	this->rectShape = rectShape;
 	this->speed = speed;
 }
 
-Vector2 GameManager::Car::Car::GetPos()
+GameManager::Rect::Rect::~Rect()
+{
+}
+
+Vector2 GameManager::Rect::Rect::GetPos()
 {
 	return pos;
 }
 
-sf::RectangleShape GameManager::Car::Car::GetCarShape()
+sf::RectangleShape GameManager::Rect::Rect::GetCarShape()
 {
-	return carShape;
+	return rectShape;
 }
 
-float GameManager::Car::Car::GetSpeed()
+float GameManager::Rect::Rect::GetSpeed()
 {
 	return speed;
 }
 
-void GameManager::Car::Car::Move(int screenWidth)
+void GameManager::Rect::Rect::Move(int screenWidth)
 {
-	carShape.setPosition(pos.x, pos.y);
+	rectShape.setPosition(pos.x, pos.y);
 	pos.x -= speed;
-	if (pos.x+carShape.getSize().x<0)
+	if (pos.x+rectShape.getSize().x<0)
 	{
 		pos.x = screenWidth;
 	}
@@ -34,4 +38,9 @@ void GameManager::Car::Car::Move(int screenWidth)
 	{
 		pos.x = 0;
 	}
+}
+
+void GameManager::Rect::Rect::SetPos(Vector2 pos)
+{
+	this->pos=pos;
 }

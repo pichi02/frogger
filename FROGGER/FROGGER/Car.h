@@ -3,22 +3,23 @@
 #include"Vector2.h"
 namespace GameManager
 {
-	namespace Car 
+	namespace Rect 
 	{
 
-		class Car
+		class Rect
 		{
 		private:
 			Vector2 pos;
-			sf::RectangleShape carShape;
+			sf::RectangleShape rectShape;
 			float speed;
 		public:
-			Car(sf::RectangleShape carShape,Vector2 pos, float speed);
-			~Car(); 
+			Rect(sf::RectangleShape rectShape,Vector2 pos, float speed);
+			~Rect(); 
 			Vector2 GetPos();
 			sf::RectangleShape GetCarShape();
 			float GetSpeed();
 			void Move(int screenWidth);
+			void SetPos(Vector2 pos);
 
 
 		};

@@ -11,7 +11,7 @@ namespace GameManager
 	using namespace Gameplay;
 	int screenWidth = 800;
 	int screenHeight = 600;
-
+	bool isOpen = true;
 	screens currentScreen = MENU;
 
 	void InitGame()
@@ -24,17 +24,10 @@ namespace GameManager
 	{
 		sf::RenderWindow GameWindow(sf::VideoMode(GameManager::screenWidth, GameManager::screenHeight), "FROGGER");
 
-		while (GameWindow.isOpen() && !gameOver)
+		while (isOpen && !gameOver)
 		{
 			sf::Event event;
-			while (GameWindow.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-				{
-					GameWindow.close();
-					
-				}
-			}
+
 
 			GameWindow.clear();
 			switch (currentScreen)
@@ -44,10 +37,17 @@ namespace GameManager
 				Gamemanager::menu::DrawMenu(GameWindow);
 				break;
 			case GameManager::GAMEPLAY:
+				if (GameWindow.pollEvent(event))
+				{
+					GameManager::Gameplay::UpdateFrog(GameWindow, event);
+					if (event.type == sf::Event::Closed)
+					{
+						isOpen = false;
 
-				GameManager::Gameplay::UpdateFrog(GameWindow, event);
+					}
+				}
 
-				GameManager::Gameplay::UpdateCar(GameWindow, event);
+				GameManager::Gameplay::UpdateRects(GameWindow, event);
 				GameManager::Gameplay::Draw(GameWindow);
 				break;
 			case GameManager::GAMEOVER:
@@ -67,9 +67,8 @@ namespace GameManager
 	void ExecuteGame()
 	{
 		InitGame();
-		while (true)
-		{
-			GameManager();
-		}
+
+		GameManager();
+
 	}
 }

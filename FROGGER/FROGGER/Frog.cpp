@@ -6,6 +6,7 @@ GameManager::Frog::Frog::Frog(sf::RectangleShape frogShape, Vector2 pos, float s
 	this->frogShape = frogShape;
 	this->pos = pos;
 	this->speed = speed;
+	lifes = 5;
 }
 
 Vector2 GameManager::Frog::Frog::GetPosition()
@@ -31,6 +32,10 @@ void GameManager::Frog::Frog::MoveDown()
 {
 	pos.y += speed;
 }
+int GameManager::Frog::Frog::GetLifes()
+{
+	return lifes;
+}
 void GameManager::Frog::Frog::MoveLeft()
 {
 	pos.x -= speed;
@@ -43,9 +48,18 @@ void GameManager::Frog::Frog::Draw()
 {
 	frogShape.setPosition(pos.x, pos.y);
 }
+void GameManager::Frog::Frog::SetPosition(Vector2 pos)
+{
+	this->pos = pos;
+}
 bool GameManager::Frog::Frog::Collision(sf::RectangleShape rect)
 {
 	return frogShape.getPosition().x <= rect.getPosition().x + rect.getSize().x && rect.getPosition().x <= frogShape.getPosition().x + frogShape.getSize().x && frogShape.getPosition().y <= rect.getPosition().y + rect.getSize().y && rect.getPosition().y <= frogShape.getPosition().y + frogShape.getSize().y;
+}
+
+void GameManager::Frog::Frog::SubstractLife()
+{
+	lifes--;
 }
 
 

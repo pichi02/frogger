@@ -16,7 +16,7 @@ Vector2 GameManager::Rect::Rect::GetPos()
 	return pos;
 }
 
-sf::RectangleShape GameManager::Rect::Rect::GetCarShape()
+sf::RectangleShape GameManager::Rect::Rect::GetRectShape()
 {
 	return rectShape;
 }

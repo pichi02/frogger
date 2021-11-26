@@ -11,6 +11,7 @@ namespace GameManager
 		void UpdateFrog(sf::RenderWindow& window, sf::Event& event);
 		void ResetValues();
 		void UnloadGameplay();
+		bool CheckLogsCollision();
 		extern int screenWidth;
 		extern int screenHeight;
 

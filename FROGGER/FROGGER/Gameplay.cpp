@@ -17,12 +17,14 @@ namespace GameManager
 		sf::RectangleShape frogRect({ 18.0f,18.0f });
 		sf::RectangleShape carRect({ 40.0f ,17.0f });
 		sf::RectangleShape woodRect({ 120.0f ,17.0f });
+		sf::RectangleShape waterRect({ (float)screenWidth ,(float)screenHeight / 2 });
 
 		Frog::Frog* frog;
 		Rect::Rect* car[carsCount];
 		Rect::Rect* woodsRow1[woodsPerRow];
 		Rect::Rect* woodsRow2[woodsPerRow];
 		Rect::Rect* woodsRow3[woodsPerRow];
+		Rect::Rect* waterHitBox;
 
 
 		void GameManager::Gameplay::InitValues()
@@ -34,7 +36,9 @@ namespace GameManager
 			woodRect.setFillColor(sf::Color::Green);
 			frogRect.setFillColor(sf::Color::Green);
 			carRect.setFillColor(sf::Color::Blue);
+			waterRect.setFillColor(sf::Color::Blue);
 
+			waterHitBox = new Rect::Rect(waterRect, { 0,0 }, 0.0f);
 			for (int i = 0; i < woodsPerRow; i++)
 			{
 				woodsRow1[i] = new Rect::Rect(woodRect, { screenWidth / 2.0f + i * woodRect.getSize().x * 2.5f , screenHeight / 2.15f }, 0.04f);
@@ -60,37 +64,42 @@ namespace GameManager
 			for (int i = 0; i < carsCount; i++)
 			{
 				car[i]->Move(screenWidth);
-				if (frog->Collision(car[i]->GetCarShape()))
+				if (frog->Collision(car[i]->GetRectShape()))
 				{
 					gameOver = true;
 				}
 
 			}
+			isInWood = false;
 			for (int i = 0; i < woodsPerRow; i++)
 			{
 				woodsRow1[i]->Move(screenWidth);
 				woodsRow2[i]->Move(screenWidth);
 
-
-				if (!isInWood&&(frog->Collision(woodsRow1[i]->GetCarShape()) || frog->Collision(woodsRow2[i]->GetCarShape())))
+				if (GameManager::Gameplay::CheckLogsCollision())
 				{
-					isInWood = true;
-					frog->SetPosition({ frog->GetPosition().x - woodsRow1[i]->GetSpeed(), frog->GetPosition().y });
 
+					if (frog->Collision(woodsRow2[i]->GetRectShape()))
+					{
+						frog->SetPosition({ frog->GetPosition().x - woodsRow2[0]->GetSpeed(),frog->GetPosition().y });
+					}
+					else if (frog->Collision(woodsRow1[i]->GetRectShape()))
+					{
+						frog->SetPosition({ frog->GetPosition().x - woodsRow1[0]->GetSpeed(),frog->GetPosition().y });
+
+					}
+					
 				}
 
+
 			}
-			for (int i = 0; i < woodsPerRow; i++)
+
+
+			bool frogWaterCollide = frog->Collision(waterRect);
+			if (!CheckLogsCollision() && frogWaterCollide)
 			{
-
-				if ((!frog->Collision(woodsRow1[i]->GetCarShape()) && !frog->Collision(woodsRow2[i]->GetCarShape())) && frog->GetPosition().y < woodsRow1[i]->GetPos().y+woodRect.getSize().y)
-				{
-					frog->SubstractLife();
-				}
-
-
+				gameOver = true;
 			}
-			
 
 		}
 
@@ -100,15 +109,17 @@ namespace GameManager
 
 			for (int i = 0; i < carsCount; i++)
 			{
-				window.draw(car[i]->GetCarShape());
+				window.draw(car[i]->GetRectShape());
 
 			}
 			frog->Draw();
+			window.draw(waterHitBox->GetRectShape());
 			window.draw(frog->GetFrogShape());
+
 			for (int i = 0; i < woodsPerRow; i++)
 			{
-				window.draw(woodsRow1[i]->GetCarShape());
-				window.draw(woodsRow2[i]->GetCarShape());
+				window.draw(woodsRow1[i]->GetRectShape());
+				window.draw(woodsRow2[i]->GetRectShape());
 
 			}
 
@@ -144,6 +155,20 @@ namespace GameManager
 			}
 
 
+		}
+		bool GameManager::Gameplay::CheckLogsCollision()
+		{
+			bool collide = false;
+			for (int i = 0; i < woodsPerRow; i++)
+			{
+				if (frog->Collision(woodsRow1[i]->GetRectShape()) || frog->Collision(woodsRow2[i]->GetRectShape()))
+				{
+					collide = true;
+
+				}
+
+			}
+			return collide;
 		}
 
 		void GameManager::Gameplay::ResetValues()

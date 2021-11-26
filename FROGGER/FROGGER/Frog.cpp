@@ -54,7 +54,11 @@ void GameManager::Frog::Frog::SetPosition(Vector2 pos)
 }
 bool GameManager::Frog::Frog::Collision(sf::RectangleShape rect)
 {
-	return frogShape.getPosition().x <= rect.getPosition().x + rect.getSize().x && rect.getPosition().x <= frogShape.getPosition().x + frogShape.getSize().x && frogShape.getPosition().y <= rect.getPosition().y + rect.getSize().y && rect.getPosition().y <= frogShape.getPosition().y + frogShape.getSize().y;
+	return pos.x <= rect.getPosition().x + rect.getSize().x 
+		&& rect.getPosition().x <= pos.x + frogShape.getSize().x 
+		&& pos.y <= rect.getPosition().y + rect.getSize().y 
+		&& rect.getPosition().y <= pos.y + frogShape.getSize().y;
+	
 }
 
 void GameManager::Frog::Frog::SubstractLife()

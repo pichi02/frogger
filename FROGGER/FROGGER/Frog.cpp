@@ -7,6 +7,7 @@ GameManager::Frog::Frog::Frog(sf::RectangleShape frogShape, Vector2 pos, float s
 	this->pos = pos;
 	this->speed = speed;
 	lifes = 5;
+	goalsCollected = 0;
 }
 
 Vector2 GameManager::Frog::Frog::GetPosition()
@@ -44,7 +45,7 @@ void GameManager::Frog::Frog::MoveRight()
 {
 	pos.x += speed;
 }
-void GameManager::Frog::Frog::Draw()
+void GameManager::Frog::Frog::SetShapePosition()
 {
 	frogShape.setPosition(pos.x, pos.y);
 }
@@ -64,6 +65,16 @@ bool GameManager::Frog::Frog::Collision(sf::RectangleShape rect)
 void GameManager::Frog::Frog::SubstractLife()
 {
 	lifes--;
+}
+
+void GameManager::Frog::Frog::IncreaseGoalsCollected()
+{
+	goalsCollected++;
+}
+
+int GameManager::Frog::Frog::GetCollectedGoals()
+{
+	return goalsCollected;
 }
 
 

@@ -5,6 +5,7 @@ GameManager::Rect::Rect::Rect(sf::RectangleShape rectShape, Vector2 pos, float s
 	this->pos = pos;
 	this->rectShape = rectShape;
 	this->speed = speed;
+	
 }
 
 GameManager::Rect::Rect::~Rect()
@@ -43,4 +44,5 @@ void GameManager::Rect::Rect::Move(int screenWidth)
 void GameManager::Rect::Rect::SetPos(Vector2 pos)
 {
 	this->pos=pos;
+	rectShape.setPosition(pos.x, pos.y);
 }

@@ -14,7 +14,7 @@ namespace GameManager
 		bool CheckLogsCollision();
 		extern int screenWidth;
 		extern int screenHeight;
-
+		extern bool win;
 		extern bool gameOver;
 	}
 

@@ -10,6 +10,7 @@ namespace GameManager
 		{
 		private:
 			int lifes;
+			int goalsCollected;
 			Vector2 pos;
 			float speed;
 			sf::RectangleShape frogShape;
@@ -28,13 +29,13 @@ namespace GameManager
 			void MoveDown();
 			int GetLifes();
 			void MoveLeft();
-
 			void MoveRight();
-			void Draw();
+			void SetShapePosition();
 			void SetPosition(Vector2 pos);
 			bool Collision(sf::RectangleShape rect);
 			void SubstractLife();
-		
+			void IncreaseGoalsCollected();
+			int GetCollectedGoals();
 		};
 
 		

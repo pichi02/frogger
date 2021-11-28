@@ -19,7 +19,7 @@ namespace GameManager
 		GameManager::Gameplay::InitValues();
 		Gamemanager::menu::InitMenu();
 	}
-
+	
 	void GameManager()
 	{
 		sf::RenderWindow GameWindow(sf::VideoMode(GameManager::screenWidth, GameManager::screenHeight), "FROGGER");

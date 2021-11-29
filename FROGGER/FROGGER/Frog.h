@@ -1,15 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include"Vector2.h"
-namespace GameManager 
+namespace GameManager
 {
-	namespace Frog 
+	namespace Frog
 	{
-		
+
 		class Frog
 		{
 		private:
-			
+
 			int goalsCollected;
 			int lifes;
 			Vector2 pos;
@@ -18,11 +18,11 @@ namespace GameManager
 
 			sf::Sprite frogSprite;
 			sf::Texture frogTexture;
-						
+
 		public:
-			Frog(sf::RectangleShape frogShape,Vector2 pos, float speed);
+			Frog(sf::RectangleShape frogShape, Vector2 pos, float speed);
 			~Frog();
-			
+
 			Vector2 GetPosition();
 			float GetSpeed();
 			sf::RectangleShape GetFrogShape();
@@ -41,6 +41,7 @@ namespace GameManager
 			sf::Texture GetFrogTexture();
 			sf::Sprite GetFrogSprite();
 			void SetSpritePosition(Vector2 pos);
+			
 		};
 	}
 }

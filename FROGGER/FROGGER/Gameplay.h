@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include<SFML/Audio.hpp>
 namespace GameManager
 {
 	namespace Gameplay
@@ -13,10 +13,13 @@ namespace GameManager
 		void UnloadGameplay();
 		bool CheckLogsCollision();
 		bool CheckGoalsCollision();
+		void playMusic();
 		extern int screenWidth;
 		extern int screenHeight;
 		extern bool win;
 		extern bool gameOver;
 		extern bool pause;
+	
+		
 	}
 }

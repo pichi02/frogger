@@ -32,7 +32,7 @@ namespace GameManager
 		while (isOpen)
 		{
 			sf::Event event;
-
+			
 
 			GameWindow.clear();
 			switch (currentScreen)

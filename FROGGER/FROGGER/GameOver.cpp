@@ -34,7 +34,6 @@ namespace GameManager
 
 			
 
-			//scaleBackground = (GetScreenWidth() * 1.0f) / scaleAux3;
 			font.loadFromFile("Fonts/JungleAdventurer.ttf");
 			playText.setFont(font);
 			playText.setString("PLAY");

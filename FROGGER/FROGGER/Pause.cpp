@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "Gameplay.h"
 
+
 namespace GameManager
 {
 	namespace Pause
@@ -23,7 +24,7 @@ namespace GameManager
 
 		static sf::Sprite pauseSprite;
 		static sf::Texture pauseTexture;
-
+		
 		void InitPause()
 		{
 			pauseTexture.loadFromFile("Textures/pauseBackground.png");
@@ -70,6 +71,8 @@ namespace GameManager
 				{
 					GameManager::Gameplay::pause = false;
 					GameManager::currentScreen = GameManager::GAMEPLAY;
+					GameManager::Gameplay::playMusic();
+
 				}
 			}
 			else rect1.setFillColor(sf::Color::Blue);
@@ -82,6 +85,7 @@ namespace GameManager
 				{
 					GameManager::Gameplay::pause = false;
 					GameManager::currentScreen = GameManager::MENU;
+					GameManager::Gameplay::ResetValues();
 				}
 			}
 			else rect2.setFillColor(sf::Color::Blue);

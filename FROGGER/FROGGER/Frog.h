@@ -9,8 +9,9 @@ namespace GameManager
 		class Frog
 		{
 		private:
-			int lifes;
+			
 			int goalsCollected;
+			int lifes;
 			Vector2 pos;
 			float speed;
 			sf::RectangleShape frogShape;
@@ -36,6 +37,7 @@ namespace GameManager
 			void SubstractLife();
 			void IncreaseGoalsCollected();
 			int GetCollectedGoals();
+
 		};
 
 		

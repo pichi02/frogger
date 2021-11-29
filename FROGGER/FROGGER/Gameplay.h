@@ -12,6 +12,7 @@ namespace GameManager
 		void ResetValues();
 		void UnloadGameplay();
 		bool CheckLogsCollision();
+		bool CheckGoalsCollision();
 		extern int screenWidth;
 		extern int screenHeight;
 		extern bool win;

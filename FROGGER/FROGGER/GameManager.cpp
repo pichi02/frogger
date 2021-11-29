@@ -1,10 +1,11 @@
-#include <SFML/Graphics.hpp>
 
 #include "GameManager.h"
 #include"Frog.h"
 #include"Car.h"
 #include "Menu.h"
 #include "Gameplay.h"
+#include"GameOver.h"
+#include"Credits.h"
 
 namespace GameManager
 {
@@ -12,19 +13,21 @@ namespace GameManager
 	int screenWidth = 800;
 	int screenHeight = 600;
 	bool isOpen = true;
-	screens currentScreen = MENU;
+	extern screens currentScreen = MENU;
 
 	void InitGame()
 	{
-		GameManager::Gameplay::InitValues();
-		Gamemanager::menu::InitMenu();
+	
+		GameManager::Menu::InitMenu();
+		GameManager::GameOver::InitGameOver();
+		GameManager::Credits::InitCredits();
 	}
 	
 	void GameManager()
 	{
 		sf::RenderWindow GameWindow(sf::VideoMode(GameManager::screenWidth, GameManager::screenHeight), "FROGGER");
 
-		while (isOpen && !gameOver)
+		while (isOpen)
 		{
 			sf::Event event;
 
@@ -33,8 +36,8 @@ namespace GameManager
 			switch (currentScreen)
 			{
 			case GameManager::MENU:
-				Gamemanager::menu::UpdateMenu(GameWindow);
-				Gamemanager::menu::DrawMenu(GameWindow);
+				GameManager::Menu::UpdateMenu(GameWindow);
+				GameManager::Menu::DrawMenu(GameWindow);
 				break;
 			case GameManager::GAMEPLAY:
 				if (GameWindow.pollEvent(event))
@@ -43,17 +46,22 @@ namespace GameManager
 					if (event.type == sf::Event::Closed)
 					{
 						isOpen = false;
-
 					}
 				}
-
 				GameManager::Gameplay::UpdateRects(GameWindow, event);
 				GameManager::Gameplay::Draw(GameWindow);
 				break;
+
 			case GameManager::GAMEOVER:
+				GameManager::GameOver::UpdateGameOver(GameWindow);
+				GameManager::GameOver::DrawGameOver(GameWindow);
 				break;
+
 			case GameManager::CREDITS:
+				GameManager::Credits::UpdateCredits(GameWindow);
+				GameManager::Credits::DrawCredits(GameWindow);
 				break;
+
 			case GameManager::PAUSE:
 				break;
 			default:

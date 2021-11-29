@@ -1,9 +1,10 @@
 #include "Menu.h"
 #include "GameManager.h"
+#include"Gameplay.h"
 
-namespace Gamemanager
+namespace GameManager
 {
-	namespace menu
+	namespace Menu
 	{
 		extern int screenWidth = 800;
 		extern int screenHeight = 600;
@@ -30,7 +31,11 @@ namespace Gamemanager
 		static sf::RectangleShape rect2;
 		static sf::RectangleShape rect3;
 		static sf::RectangleShape rect4;
-
+		sf::Font font;
+		sf::Text startText;
+		sf::Text optionsText;
+		sf::Text creditsText;
+		sf::Text quitText;
 		static int halfScreenWidth = 0;
 		static int halfScreenHeight = 0;
 
@@ -76,6 +81,33 @@ namespace Gamemanager
 			rect4.setPosition(halfScreenWidth - rect4.getSize().x / 2, halfScreenHeight + screenHeight * 0.01);
 
 			//scaleBackground = (GetScreenWidth() * 1.0f) / scaleAux3;
+			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
+			startText.setFont(font);
+			startText.setString("START");
+			startText.setPosition(rect4.getPosition());
+			startText.setCharacterSize(30);
+			startText.setFillColor(sf::Color::White);
+
+			optionsText.setFont(font);
+			optionsText.setString("OPTIONS");
+			optionsText.setPosition(rect1.getPosition());
+			optionsText.setCharacterSize(30);
+			optionsText.setFillColor(sf::Color::White);
+
+			creditsText.setFont(font);
+			creditsText.setString("CREDITS");
+			creditsText.setPosition(rect2.getPosition());
+			creditsText.setCharacterSize(30);
+			creditsText.setFillColor(sf::Color::White);
+
+			quitText.setFont(font);
+			quitText.setString("QUIT");
+			quitText.setPosition(rect3.getPosition());
+			quitText.setCharacterSize(30);
+			quitText.setFillColor(sf::Color::White);
+
+
+
 		}
 
 		void UpdateMenu(sf::RenderWindow& rWindow)
@@ -102,7 +134,7 @@ namespace Gamemanager
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					UnloadMenu();
-					GameManager::currentScreen = GameManager::MENU;
+					GameManager::currentScreen = GameManager::CREDITS;
 				}
 			}
 			else rect2.setFillColor(sf::Color::Red);
@@ -113,7 +145,7 @@ namespace Gamemanager
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					//exit = true;
+					isOpen = false;
 				}
 			}
 			else rect3.setFillColor(sf::Color::Red);
@@ -125,7 +157,7 @@ namespace Gamemanager
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					UnloadMenu();
-					//InitValues();
+					GameManager::Gameplay::InitValues();
 					GameManager::currentScreen = GameManager::GAMEPLAY;
 				}
 			}
@@ -138,6 +170,11 @@ namespace Gamemanager
 			window.draw(rect2);
 			window.draw(rect3);
 			window.draw(rect4);
+			window.draw(startText);
+			window.draw(optionsText);
+			window.draw(creditsText);
+			window.draw(quitText);
+
 		}
 
 		void UnloadMenu()

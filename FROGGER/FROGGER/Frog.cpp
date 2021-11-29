@@ -10,6 +10,10 @@ GameManager::Frog::Frog::Frog(sf::RectangleShape frogShape, Vector2 pos, float s
 	goalsCollected = 0;
 }
 
+GameManager::Frog::Frog::~Frog()
+{
+}
+
 Vector2 GameManager::Frog::Frog::GetPosition()
 {
 	return pos;

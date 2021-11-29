@@ -1,6 +1,7 @@
 #include "Gameplay.h"
 #include"Car.h"
 #include"Frog.h"
+#include"GameManager.h"
 
 namespace GameManager
 {
@@ -23,7 +24,7 @@ namespace GameManager
 		sf::RectangleShape goalRect({ 30.0f,30.0f });
 		sf::RectangleShape busRect({ 70.0f,18.0f });
 
-		Frog::Frog* frog;
+		Frog::Frog* frog = new Frog::Frog(frogRect, { screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f }, 40.3f);
 		Rect::Rect* car[carsCount];
 		Rect::Rect* woodsRow1[woodsPerRow];
 		Rect::Rect* woodsRow2[woodsPerRow];
@@ -38,15 +39,17 @@ namespace GameManager
 
 		void GameManager::Gameplay::InitValues()
 		{
-			frog = new Frog::Frog(frogRect, { screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f }, 40.3f);
 
 
+			gameOver = false;
 			speedVariation = 0.05f;
 			woodRect.setFillColor(sf::Color::Green);
 			frogRect.setFillColor(sf::Color::White);
 			carRect.setFillColor(sf::Color::Blue);
 			waterRect.setFillColor(sf::Color::Blue);
 			goalRect.setFillColor(sf::Color::Magenta);
+
+			frog->SetPosition({ screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f });
 
 			waterHitBox = new Rect::Rect(waterRect, { 0,0 }, 0.0f);
 			for (int i = 0; i < woodsPerRow; i++)
@@ -63,6 +66,7 @@ namespace GameManager
 				goals[i] = new Rect::Rect(goalRect, { 0.0f,0.0f }, 0.0f);
 				goals[i]->SetPos({ screenWidth / (float)goalsCount * i + (screenWidth * 5 / 100) , screenHeight * 6.5f / 100.0f });
 			}
+
 			for (int i = 0; i < carsCount; i++)
 			{
 				if (i % 2 == 0)
@@ -93,7 +97,8 @@ namespace GameManager
 				car[i]->Move(screenWidth);
 				if (frog->Collision(car[i]->GetRectShape()))
 				{
-					gameOver = true;
+					InitValues();
+					frog->SubstractLife();
 				}
 
 			}
@@ -138,12 +143,15 @@ namespace GameManager
 
 				if (frog->Collision(goals[i]->GetRectShape()))
 				{
+
 					if (!isGoalCollected[i])
 					{
+						frog->IncreaseGoalsCollected();
 						if (frog->GetCollectedGoals() < 5)
 						{
 							isGoalCollected[i] = true;
-							ResetValues();
+
+							InitValues();
 						}
 						else
 						{
@@ -155,13 +163,23 @@ namespace GameManager
 				}
 			}
 
-
-
-			/*	bool frogWaterCollide = frog->Collision(waterRect);
-				if (!CheckLogsCollision() && frogWaterCollide)
-				{
-					gameOver = true;
-				}*/
+			if (!CheckLogsCollision() && frog->Collision(waterRect) && !CheckGoalsCollision())
+			{
+				InitValues();
+				frog->SubstractLife();
+			}
+			if (frog->GetLifes() == 0)
+			{
+				gameOver = true;
+			}
+			if (win)
+			{
+				currentScreen = GAMEOVER;
+			}
+			else if (gameOver)
+			{
+				currentScreen = GAMEOVER;
+			}
 
 		}
 
@@ -241,10 +259,29 @@ namespace GameManager
 			}
 			return collide;
 		}
+		bool GameManager::Gameplay::CheckGoalsCollision()
+		{
+			bool collide = false;
+			for (int i = 0; i < goalsCount; i++)
+			{
+				if (frog->Collision(goals[i]->GetRectShape()))
+				{
+					collide = true;
+
+				}
+
+			}
+			return collide;
+		}
 
 		void GameManager::Gameplay::ResetValues()
 		{
 			InitValues();
+			for (int i = 0; i < goalsCount; i++)
+			{
+				isGoalCollected[i] = false;
+			}
+			frog = new Frog::Frog(frogRect, { screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f }, 40.3f);
 		}
 
 		void GameManager::Gameplay::UnloadGameplay()

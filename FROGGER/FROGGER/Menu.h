@@ -2,9 +2,9 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 
-namespace Gamemanager
+namespace GameManager
 {
-	namespace menu
+	namespace Menu
 	{
 		void InitMenu();
 		void UpdateMenu(sf::RenderWindow& rWindow);

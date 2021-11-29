@@ -17,7 +17,7 @@ namespace GameManager
 		sf::Text menuText;
 		void GameManager::Credits::InitCredits()
 		{
-			menuButtonRect.setFillColor(sf::Color::Red);
+			menuButtonRect.setFillColor(sf::Color::Blue);
 			menuButtonRect.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20) });
 			menuButtonRect.setPosition(screenWidth * 0.7, screenHeight * 0.8);
 
@@ -37,7 +37,7 @@ namespace GameManager
 
 			if (menuButtonRect.getGlobalBounds().intersects(mouseRect))
 			{
-				menuButtonRect.setFillColor(sf::Color::Blue);
+				menuButtonRect.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
@@ -46,7 +46,7 @@ namespace GameManager
 			
 				}
 			}
-			else menuButtonRect.setFillColor(sf::Color::Red);
+			else menuButtonRect.setFillColor(sf::Color::Blue);
 		}
 
 		void GameManager::Credits::DrawCredits(sf::RenderWindow& window)

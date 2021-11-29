@@ -52,10 +52,10 @@ namespace GameManager
 			halfScreenWidth = screenWidth / 2;
 			halfScreenHeight = screenHeight / 2;
 
-			rect1.setFillColor(sf::Color::Red);
-			rect2.setFillColor(sf::Color::Red);
-			rect3.setFillColor(sf::Color::Red);
-			rect4.setFillColor(sf::Color::Red);
+			rect1.setFillColor(sf::Color::Cyan);
+			rect2.setFillColor(sf::Color::Cyan);
+			rect3.setFillColor(sf::Color::Cyan);
+			rect4.setFillColor(sf::Color::Cyan);
 
 			rect1.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
 			rect1.setPosition(halfScreenWidth - rect1.getSize().x / 2, halfScreenHeight + screenHeight * 0.11);
@@ -106,18 +106,18 @@ namespace GameManager
 
 			if (rect1.getGlobalBounds().intersects(mouseRect))
 			{
-				rect1.setFillColor(sf::Color::Blue);
+				rect1.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					//mute = !mute;
 				}
 			}
-			else rect1.setFillColor(sf::Color::Red);
+			else rect1.setFillColor(sf::Color::Blue);
 
 			if (rect2.getGlobalBounds().intersects(mouseRect))
 			{
-				rect2.setFillColor(sf::Color::Blue);
+				rect2.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
@@ -125,22 +125,22 @@ namespace GameManager
 					GameManager::currentScreen = GameManager::CREDITS;
 				}
 			}
-			else rect2.setFillColor(sf::Color::Red);
+			else rect2.setFillColor(sf::Color::Blue);
 
 			if (rect3.getGlobalBounds().intersects(mouseRect))
 			{
-				rect3.setFillColor(sf::Color::Blue);
+				rect3.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					isOpen = false;
 				}
 			}
-			else rect3.setFillColor(sf::Color::Red);
+			else rect3.setFillColor(sf::Color::Blue);
 
 			if (rect4.getGlobalBounds().intersects(mouseRect))
 			{
-				rect4.setFillColor(sf::Color::Blue);
+				rect4.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
@@ -149,7 +149,7 @@ namespace GameManager
 					GameManager::currentScreen = GameManager::GAMEPLAY;
 				}
 			}
-			else rect4.setFillColor(sf::Color::Red);
+			else rect4.setFillColor(sf::Color::Blue);
 		}
 
 		void DrawMenu(sf::RenderWindow& window)

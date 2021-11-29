@@ -22,8 +22,8 @@ namespace GameManager
 		void InitGameOver()
 		{
 			
-			menuButtonRect.setFillColor(sf::Color::Red);
-			playButtonRect.setFillColor(sf::Color::Red);
+			menuButtonRect.setFillColor(sf::Color::Blue);
+			playButtonRect.setFillColor(sf::Color::Blue);
 			
 
 			menuButtonRect.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20) });
@@ -72,7 +72,7 @@ namespace GameManager
 
 			if (playButtonRect.getGlobalBounds().intersects(mouseRect))
 			{
-				playButtonRect.setFillColor(sf::Color::Blue);
+				playButtonRect.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
@@ -82,11 +82,11 @@ namespace GameManager
 				}
 				
 			}
-			else playButtonRect.setFillColor(sf::Color::Red);
+			else playButtonRect.setFillColor(sf::Color::Blue);
 
 			if (menuButtonRect.getGlobalBounds().intersects(mouseRect))
 			{
-				menuButtonRect.setFillColor(sf::Color::Blue);
+				menuButtonRect.setFillColor(sf::Color::Cyan);
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
@@ -97,7 +97,7 @@ namespace GameManager
 					
 				}
 			}
-			else menuButtonRect.setFillColor(sf::Color::Red);
+			else menuButtonRect.setFillColor(sf::Color::Blue);
 
 		}
 

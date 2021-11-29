@@ -36,6 +36,7 @@ namespace GameManager
 		Rect::Rect* goals[goalsCount];
 
 		bool isGoalCollected[goalsCount] = { false };
+		extern bool pause = false;
 
 		sf::Font font;
 		sf::Text lifeText;
@@ -47,12 +48,22 @@ namespace GameManager
 		sf::Sprite goalCollectedFrogSprite[goalsCount];
 		sf::Texture goalCollectedFrogTexture[goalsCount];
 
+		static sf::RectangleShape btnPause1;
+		static sf::RectangleShape btnPause2;
+
+		static sf::Vector2i mousePoint;
+		static sf::FloatRect mouseRect;
+
 
 		void GameManager::Gameplay::InitValues()
 		{
-			gameplayTexture.loadFromFile("Textures/froggerBackground.png");
-			
+			btnPause1.setPosition({ screenWidth * 0.96f, screenHeight * 0.02f });
+			btnPause1.setSize({ (10), (20)});
+			btnPause2.setPosition({ screenWidth * 0.975f, screenHeight * 0.02f });
+			btnPause2.setSize({ (10), (20)});
 
+			gameplayTexture.loadFromFile("Textures/froggerBackground.png");
+		
 			gameplaySprite.setTexture(gameplayTexture);
 			for (int i = 0; i < goalsCount; i++)
 			{
@@ -123,110 +134,138 @@ namespace GameManager
 
 		void GameManager::Gameplay::UpdateRects(sf::RenderWindow& window, sf::Event& event)
 		{
-			lifeText.setString("Lifes: " + std::to_string(frog->GetLifes()));
-			goalsCollectedText.setString("Collected goals: " + std::to_string(frog->GetCollectedGoals()));
+			mousePoint = sf::Mouse::getPosition(window);
+			mousePoint = (sf::Vector2i)window.mapPixelToCoords(mousePoint);
+			sf::FloatRect mouseRect(sf::Vector2f(mousePoint), { 32, 32 });
 
-			for (int i = 0; i < carsCount; i++)
+			if (btnPause1.getGlobalBounds().intersects(mouseRect))
 			{
-				car[i]->Move(screenWidth);
-				if (frog->Collision(car[i]->GetRectShape()))
+				btnPause1.setFillColor(sf::Color::White);
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					pause = true;
+					GameManager::currentScreen = GameManager::PAUSE;
+				}
+			}
+
+			if (btnPause2.getGlobalBounds().intersects(mouseRect))
+			{
+				btnPause2.setFillColor(sf::Color::White);
+
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					pause = true;
+					GameManager::currentScreen = GameManager::PAUSE;
+				}
+			}
+
+			if (!pause)
+			{
+				lifeText.setString("Lifes: " + std::to_string(frog->GetLifes()));
+				goalsCollectedText.setString("Collected goals: " + std::to_string(frog->GetCollectedGoals()));
+
+				for (int i = 0; i < carsCount; i++)
+				{
+					car[i]->Move(screenWidth);
+					if (frog->Collision(car[i]->GetRectShape()))
+					{
+						InitValues();
+						frog->SubstractLife();
+					}
+				}
+
+				isInWood = false;
+
+				for (int i = 0; i < woodsPerRow; i++)
+				{
+					woodsRow1[i]->Move(screenWidth);
+					woodsRow2[i]->Move(screenWidth);
+					woodsRow3[i]->Move(screenWidth);
+					woodsRow4[i]->Move(screenWidth);
+					woodsRow5[i]->Move(screenWidth);
+
+					if (GameManager::Gameplay::CheckLogsCollision())
+					{
+						if (frog->Collision(woodsRow2[i]->GetRectShape()))
+						{
+							frog->SetPosition({ frog->GetPosition().x - woodsRow2[0]->GetSpeed(),frog->GetPosition().y });
+						}
+						else if (frog->Collision(woodsRow1[i]->GetRectShape()))
+						{
+							frog->SetPosition({ frog->GetPosition().x - woodsRow1[0]->GetSpeed(),frog->GetPosition().y });
+						}
+						else if (frog->Collision(woodsRow3[i]->GetRectShape()))
+						{
+							frog->SetPosition({ frog->GetPosition().x - woodsRow3[0]->GetSpeed(),frog->GetPosition().y });
+						}
+						else if (frog->Collision(woodsRow4[i]->GetRectShape()))
+						{
+							frog->SetPosition({ frog->GetPosition().x - woodsRow4[0]->GetSpeed(),frog->GetPosition().y });
+						}
+						else if (frog->Collision(woodsRow5[i]->GetRectShape()))
+						{
+							frog->SetPosition({ frog->GetPosition().x - woodsRow5[0]->GetSpeed(),frog->GetPosition().y });
+						}
+					}
+				}
+
+				for (int i = 0; i < goalsCount; i++)
+				{
+					if (frog->Collision(goals[i]->GetRectShape()))
+					{
+						if (!isGoalCollected[i])
+						{
+							frog->IncreaseGoalsCollected();
+							if (frog->GetCollectedGoals() < 5)
+							{
+								isGoalCollected[i] = true;
+
+								InitValues();
+							}
+							else
+							{
+								win = true;
+							}
+						}
+
+					}
+				}
+
+				frog->SetSpritePosition(frog->GetPosition());
+
+				for (int i = 0; i < woodsPerRow; i++)
+				{
+					woodsRow1[i]->SetSpritePosition(woodsRow1[i]->GetPos());
+					woodsRow2[i]->SetSpritePosition(woodsRow2[i]->GetPos());
+					woodsRow3[i]->SetSpritePosition(woodsRow3[i]->GetPos());
+					woodsRow4[i]->SetSpritePosition(woodsRow4[i]->GetPos());
+					woodsRow5[i]->SetSpritePosition(woodsRow5[i]->GetPos());
+				}
+
+				for (int i = 0; i < carsCount; i++)
+				{
+					car[i]->SetSpritePosition(car[i]->GetPos());
+				}
+
+				if (!CheckLogsCollision() && frog->Collision(waterRect) && !CheckGoalsCollision())
 				{
 					InitValues();
 					frog->SubstractLife();
 				}
-			}
-
-			isInWood = false;
-
-			for (int i = 0; i < woodsPerRow; i++)
-			{
-				woodsRow1[i]->Move(screenWidth);
-				woodsRow2[i]->Move(screenWidth);
-				woodsRow3[i]->Move(screenWidth);
-				woodsRow4[i]->Move(screenWidth);
-				woodsRow5[i]->Move(screenWidth);
-
-				if (GameManager::Gameplay::CheckLogsCollision())
+				if (frog->GetLifes() == 0)
 				{
-					if (frog->Collision(woodsRow2[i]->GetRectShape()))
-					{
-						frog->SetPosition({ frog->GetPosition().x - woodsRow2[0]->GetSpeed(),frog->GetPosition().y });
-					}
-					else if (frog->Collision(woodsRow1[i]->GetRectShape()))
-					{
-						frog->SetPosition({ frog->GetPosition().x - woodsRow1[0]->GetSpeed(),frog->GetPosition().y });
-					}
-					else if (frog->Collision(woodsRow3[i]->GetRectShape()))
-					{
-						frog->SetPosition({ frog->GetPosition().x - woodsRow3[0]->GetSpeed(),frog->GetPosition().y });
-					}
-					else if (frog->Collision(woodsRow4[i]->GetRectShape()))
-					{
-						frog->SetPosition({ frog->GetPosition().x - woodsRow4[0]->GetSpeed(),frog->GetPosition().y });
-					}
-					else if (frog->Collision(woodsRow5[i]->GetRectShape()))
-					{
-						frog->SetPosition({ frog->GetPosition().x - woodsRow5[0]->GetSpeed(),frog->GetPosition().y });
-					}
+					gameOver = true;
+				}
+				if (win)
+				{
+					currentScreen = GAMEOVER;
+				}
+				else if (gameOver)
+				{
+					currentScreen = GAMEOVER;
 				}
 			}
-
-			for (int i = 0; i < goalsCount; i++)
-			{
-				if (frog->Collision(goals[i]->GetRectShape()))
-				{
-					if (!isGoalCollected[i])
-					{
-						frog->IncreaseGoalsCollected();
-						if (frog->GetCollectedGoals() < 5)
-						{
-							isGoalCollected[i] = true;
-
-							InitValues();
-						}
-						else
-						{
-							win = true;
-						}
-					}
-				
-				}
-			}
-
-			frog->SetSpritePosition(frog->GetPosition());
-			
-			for (int i = 0; i < woodsPerRow; i++)
-			{
-				woodsRow1[i]->SetSpritePosition(woodsRow1[i]->GetPos());
-				woodsRow2[i]->SetSpritePosition(woodsRow2[i]->GetPos());
-				woodsRow3[i]->SetSpritePosition(woodsRow3[i]->GetPos());
-				woodsRow4[i]->SetSpritePosition(woodsRow4[i]->GetPos());
-				woodsRow5[i]->SetSpritePosition(woodsRow5[i]->GetPos());
-			}
-
-			for (int i = 0; i < carsCount; i++)
-			{
-				car[i]->SetSpritePosition(car[i]->GetPos());
-			}
-
-			if (!CheckLogsCollision() && frog->Collision(waterRect) && !CheckGoalsCollision())
-			{
-				InitValues();
-				frog->SubstractLife();
-			}
-			if (frog->GetLifes() == 0)
-			{
-				gameOver = true;
-			}
-			if (win)
-			{
-				currentScreen = GAMEOVER;
-			}
-			else if (gameOver)
-			{
-				currentScreen = GAMEOVER;
-			}
-
 		}
 
 		void GameManager::Gameplay::Draw(sf::RenderWindow& window)
@@ -258,32 +297,37 @@ namespace GameManager
 			window.draw(lifeText);
 			window.draw(goalsCollectedText);
 			window.draw(frog->GetFrogSprite());
+			window.draw(btnPause1);
+			window.draw(btnPause2);
 		}
 
 		void UpdateFrog(sf::RenderWindow& window, sf::Event& event)
 		{
-			switch (event.type)
+			if (!pause)
 			{
-			case sf::Event::KeyReleased:
-				switch (event.key.code)
+				switch (event.type)
 				{
-				case sf::Keyboard::W:
-					frog->MoveUp();
-					break;
-				case sf::Keyboard::A:
-					frog->MoveLeft();
-					break;
-				case sf::Keyboard::S:
-					frog->MoveDown();
-					break;
-				case sf::Keyboard::D:
-					frog->MoveRight();
-					break;
+				case sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::W:
+						frog->MoveUp();
+						break;
+					case sf::Keyboard::A:
+						frog->MoveLeft();
+						break;
+					case sf::Keyboard::S:
+						frog->MoveDown();
+						break;
+					case sf::Keyboard::D:
+						frog->MoveRight();
+						break;
+					default:
+						break;
+					}
 				default:
 					break;
 				}
-			default:
-				break;
 			}
 		}
 
@@ -308,7 +352,6 @@ namespace GameManager
 				if (frog->Collision(goals[i]->GetRectShape()))
 				{
 					collide = true;
-
 				}
 			}
 			return collide;

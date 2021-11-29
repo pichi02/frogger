@@ -59,9 +59,6 @@ namespace GameManager
 			loseText.setPosition({ screenWidth * 0.37f, screenHeight * 0.3f });
 			loseText.setCharacterSize(50);
 			loseText.setFillColor(sf::Color::White);
-			
-
-
 		}
 
 		void UpdateGameOver(sf::RenderWindow& rWindow)
@@ -78,7 +75,6 @@ namespace GameManager
 				{
 					GameManager::Gameplay::ResetValues();
 					currentScreen = GAMEPLAY;
-					
 				}
 				
 			}
@@ -93,12 +89,9 @@ namespace GameManager
 					currentScreen = MENU;
 					GameManager::Menu::InitMenu();
 					UnloadGameOver();
-					
-					
 				}
 			}
 			else menuButtonRect.setFillColor(sf::Color::Blue);
-
 		}
 
 		void DrawGameOver(sf::RenderWindow& window)
@@ -116,8 +109,6 @@ namespace GameManager
 			{
 				window.draw(loseText);
 			}
-			
-			
 		}
 
 		void GameOver::UnloadGameOver()

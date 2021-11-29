@@ -1,11 +1,12 @@
-
 #include "GameManager.h"
-#include"Frog.h"
-#include"Car.h"
+#include "Frog.h"
+#include "Car.h"
 #include "Menu.h"
 #include "Gameplay.h"
-#include"GameOver.h"
-#include"Credits.h"
+#include "GameOver.h"
+#include "Credits.h"
+#include "Rules.h"
+#include "Pause.h"
 
 namespace GameManager
 {
@@ -17,10 +18,11 @@ namespace GameManager
 
 	void InitGame()
 	{
-		
 		GameManager::Menu::InitMenu();
 		GameManager::GameOver::InitGameOver();
 		GameManager::Credits::InitCredits();
+		GameManager::Rules::InitRules();
+		GameManager::Pause::InitPause();
 	}
 	
 	void GameManager()
@@ -63,6 +65,12 @@ namespace GameManager
 				break;
 
 			case GameManager::PAUSE:
+				GameManager::Pause::UpdatePause(GameWindow);
+				GameManager::Pause::DrawPause(GameWindow);
+				break;
+			case GameManager::RULES:
+				GameManager::Rules::UpdateRules(GameWindow);
+				GameManager::Rules::DrawRules(GameWindow);
 				break;
 			default:
 				break;

@@ -101,7 +101,7 @@
     </Link>
     <PostBuildEvent>
       <Command>
-</Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,6 +160,8 @@
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Pause.cpp" />
+    <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Victory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +172,8 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pause.h" />
+    <ClInclude Include="Rules.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Victory.h" />
   </ItemGroup>

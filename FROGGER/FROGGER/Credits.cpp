@@ -18,7 +18,7 @@ namespace GameManager
 
 		sf::Texture creditsTexture;
 		sf::Sprite creditsSprite;
-		void GameManager::Credits::InitCredits()
+		void InitCredits()
 		{
 			menuButtonRect.setFillColor(sf::Color::Blue);
 			menuButtonRect.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20) });
@@ -34,7 +34,7 @@ namespace GameManager
 			creditsSprite.setTexture(creditsTexture);
 		}
 
-		void GameManager::Credits::UpdateCredits(sf::RenderWindow& rWindow)
+		void UpdateCredits(sf::RenderWindow& rWindow)
 		{
 			mousePoint = sf::Mouse::getPosition(rWindow);
 			mousePoint = (sf::Vector2i)rWindow.mapPixelToCoords(mousePoint);
@@ -54,13 +54,11 @@ namespace GameManager
 			else menuButtonRect.setFillColor(sf::Color::Blue);
 		}
 
-		void GameManager::Credits::DrawCredits(sf::RenderWindow& window)
+		void DrawCredits(sf::RenderWindow& window)
 		{
 			window.draw(creditsSprite);
 			window.draw(menuButtonRect);
 			window.draw(menuText);
-	
 		}
-
 	}
 }

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 namespace GameManager
 {
-	enum screens { MENU, GAMEPLAY, GAMEOVER, CREDITS, PAUSE};
+	enum screens { MENU, GAMEPLAY, GAMEOVER, CREDITS, PAUSE, RULES};
 
 	extern screens currentScreen;
 

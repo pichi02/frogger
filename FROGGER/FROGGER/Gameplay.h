@@ -17,6 +17,6 @@ namespace GameManager
 		extern int screenHeight;
 		extern bool win;
 		extern bool gameOver;
+		extern bool pause;
 	}
-
 }

@@ -8,29 +8,14 @@ namespace GameManager
 	{
 		extern int screenWidth = 800;
 		extern int screenHeight = 600;
-		static char text1[] = "JUGAR";
-		static char text2[] = "SONIDO";
-		static char text3[] = "CREDITOS";
-		static char text4[] = "SALIR";
-		static char text5[] = "V 1.0";
-		static int sizeText2 = 0;
-		static int sizeText3 = 0;
-		static int text1PositionX = 0;
-		static int text1PositionY = 0;
-		static int text2PositionX = 0;
-		static int text2PositionY = 0;
-		static int text3PositionX = 0;
-		static int text3PositionY = 0;
-		static int text4PositionX = 0;
-		static int text4PositionY = 0;
-		static int text5PositionX = 0;
-		static int text5PositionY = 0;
+
 		static sf::Vector2i mousePoint;
 		static sf::FloatRect mouseRect;
 		static sf::RectangleShape rect1;
 		static sf::RectangleShape rect2;
 		static sf::RectangleShape rect3;
 		static sf::RectangleShape rect4;
+
 		sf::Font font;
 		sf::Text startText;
 		sf::Text optionsText;
@@ -41,7 +26,6 @@ namespace GameManager
 
 		static sf::Sprite menuSprite;
 		static sf::Texture menuImageTexture;
-		static float scaleBackground;
 
 		void InitMenu()
 		{
@@ -93,9 +77,6 @@ namespace GameManager
 			quitText.setPosition({ screenWidth / 2.0f - quitText.getCharacterSize() - 10, screenHeight / 2.0f + 184 });
 			quitText.setCharacterSize(30);
 			quitText.setFillColor(sf::Color::White);
-
-
-
 		}
 
 		void UpdateMenu(sf::RenderWindow& rWindow)
@@ -110,7 +91,7 @@ namespace GameManager
 
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					//mute = !mute;
+					GameManager::currentScreen = GameManager::RULES;
 				}
 			}
 			else rect1.setFillColor(sf::Color::Blue);

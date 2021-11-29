@@ -16,9 +16,12 @@ namespace GameManager
 		sf::Font font;
 		sf::Text playText;
 		sf::Text menuText;
+		sf::Text victoryText;
+		sf::Text loseText;
 		
 		void InitGameOver()
 		{
+			
 			menuButtonRect.setFillColor(sf::Color::Red);
 			playButtonRect.setFillColor(sf::Color::Red);
 			
@@ -44,6 +47,18 @@ namespace GameManager
 			menuText.setPosition({ screenWidth * 0.84f - menuText.getCharacterSize() - 20.0f, screenHeight * 0.795f });
 			menuText.setCharacterSize(30);
 			menuText.setFillColor(sf::Color::White);
+
+			victoryText.setFont(font);
+			victoryText.setString("YOU WIN!");
+			victoryText.setPosition({ screenWidth * 0.4f, screenHeight * 0.3f });
+			victoryText.setCharacterSize(50);
+			victoryText.setFillColor(sf::Color::White);
+
+			loseText.setFont(font);
+			loseText.setString("YOU LOSE D:");
+			loseText.setPosition({ screenWidth * 0.37f, screenHeight * 0.3f });
+			loseText.setCharacterSize(50);
+			loseText.setFillColor(sf::Color::White);
 			
 
 
@@ -65,6 +80,7 @@ namespace GameManager
 					currentScreen = GAMEPLAY;
 					
 				}
+				
 			}
 			else playButtonRect.setFillColor(sf::Color::Red);
 
@@ -91,6 +107,17 @@ namespace GameManager
 			window.draw(menuButtonRect);
 			window.draw(menuText);
 			window.draw(playText);
+			
+			if (GameManager::Gameplay::win)
+			{
+				window.draw(victoryText);
+			}
+			else if (GameManager::Gameplay::gameOver)
+			{
+				window.draw(loseText);
+			}
+			
+			
 		}
 
 		void GameOver::UnloadGameOver()

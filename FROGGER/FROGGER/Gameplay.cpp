@@ -44,12 +44,22 @@ namespace GameManager
 		sf::Sprite gameplaySprite;
 		sf::Texture gameplayTexture;
 
+		sf::Sprite goalCollectedFrogSprite[goalsCount];
+		sf::Texture goalCollectedFrogTexture[goalsCount];
+
+
 		void GameManager::Gameplay::InitValues()
 		{
 			gameplayTexture.loadFromFile("Textures/froggerBackground.png");
+			
 
 			gameplaySprite.setTexture(gameplayTexture);
-
+			for (int i = 0; i < goalsCount; i++)
+			{
+				goalCollectedFrogTexture[i].loadFromFile("Textures/goalCollectedFrog.png");
+				goalCollectedFrogSprite[i].setTexture(goalCollectedFrogTexture[i]);
+			}
+			
 			gameOver = false;
 			speedVariation = 0.05f;
 			woodRect.setFillColor(sf::Color::Green);
@@ -179,6 +189,7 @@ namespace GameManager
 							win = true;
 						}
 					}
+				
 				}
 			}
 
@@ -234,9 +245,16 @@ namespace GameManager
 				window.draw(woodsRow4[i]->GetRectSprite());
 				window.draw(woodsRow5[i]->GetRectSprite());
 			}
-
+			for (int i = 0; i < goalsCount; i++)
+			{
+				if (isGoalCollected[i])
+				{
+					goalCollectedFrogSprite[i].setPosition(goals[i]->GetPos().x-screenWidth*0.01, goals[i]->GetPos().y);
+					window.draw(goalCollectedFrogSprite[i]);
+				}
+			}
 			frog->SetShapePosition();
-
+			
 			window.draw(lifeText);
 			window.draw(goalsCollectedText);
 			window.draw(frog->GetFrogSprite());

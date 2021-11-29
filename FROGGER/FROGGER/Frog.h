@@ -15,9 +15,10 @@ namespace GameManager
 			Vector2 pos;
 			float speed;
 			sf::RectangleShape frogShape;
-			
-			
-			
+
+			sf::Sprite frogSprite;
+			sf::Texture frogTexture;
+						
 		public:
 			Frog(sf::RectangleShape frogShape,Vector2 pos, float speed);
 			~Frog();
@@ -37,9 +38,9 @@ namespace GameManager
 			void SubstractLife();
 			void IncreaseGoalsCollected();
 			int GetCollectedGoals();
-
+			sf::Texture GetFrogTexture();
+			sf::Sprite GetFrogSprite();
+			void SetSpritePosition(Vector2 pos);
 		};
-
-		
 	}
 }

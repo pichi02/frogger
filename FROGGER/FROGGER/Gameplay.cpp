@@ -17,7 +17,7 @@ namespace GameManager
 		extern bool gameOver = false;
 		extern bool win = false;
 		bool isInWood = false;
-		sf::RectangleShape frogRect({ 18.0f,18.0f });
+		sf::RectangleShape frogRect({ 30.0f,22.0f });
 		sf::RectangleShape carRect({ 40.0f ,17.0f });
 		sf::RectangleShape woodRect({ 120.0f ,24.0f });
 		sf::RectangleShape waterRect({ (float)screenWidth ,(float)screenHeight / 2.13f });
@@ -36,15 +36,22 @@ namespace GameManager
 
 		bool isGoalCollected[goalsCount] = { false };
 
+		sf::Font font;
+		sf::Text lifeText;
+
+		sf::Sprite gameplaySprite;
+		sf::Texture gameplayTexture;
 
 		void GameManager::Gameplay::InitValues()
 		{
+			gameplayTexture.loadFromFile("Textures/froggerBackground.png");
 
+			gameplaySprite.setTexture(gameplayTexture);
 
 			gameOver = false;
 			speedVariation = 0.05f;
 			woodRect.setFillColor(sf::Color::Green);
-			frogRect.setFillColor(sf::Color::White);
+			frogRect.setFillColor(sf::Color::Transparent);
 			carRect.setFillColor(sf::Color::Blue);
 			waterRect.setFillColor(sf::Color::Blue);
 			goalRect.setFillColor(sf::Color::Magenta);
@@ -54,17 +61,17 @@ namespace GameManager
 			waterHitBox = new Rect::Rect(waterRect, { 0,0 }, 0.0f);
 			for (int i = 0; i < woodsPerRow; i++)
 			{
-				woodsRow1[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 2.45f }, 0.04f);
-				woodsRow2[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 2.90f }, -0.07f);
-				woodsRow3[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 3.5f }, 0.06f);
-				woodsRow4[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 4.6f }, -0.06f);
-				woodsRow5[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 6.2f }, 0.06f);
+				woodsRow1[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 2.45f }, 0.04f, "Textures/logs.png");
+				woodsRow2[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 2.90f }, -0.07f, "Textures/logs.png");
+				woodsRow3[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 3.5f }, 0.06f, "Textures/logs.png");
+				woodsRow4[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 4.6f }, -0.06f, "Textures/logs.png");
+				woodsRow5[i] = new Rect::Rect(woodRect, { screenWidth / 3.0f * i + woodRect.getSize().x * 3.0f , screenHeight / 6.2f }, 0.06f, "Textures/logs.png");
 
 			}
 			for (int i = 0; i < goalsCount; i++)
 			{
 				goals[i] = new Rect::Rect(goalRect, { 0.0f,0.0f }, 0.0f);
-				goals[i]->SetPos({ screenWidth / (float)goalsCount * i + (screenWidth * 5 / 100) , screenHeight * 6.5f / 100.0f });
+				goals[i]->SetPos({ screenWidth / (float)goalsCount * i + (screenWidth * 5 / 100) + i * 12 , screenHeight * 6.5f / 100.0f });
 			}
 
 			for (int i = 0; i < carsCount; i++)
@@ -73,24 +80,31 @@ namespace GameManager
 				{
 					if (i == 0)
 					{
-						car[i] = new Rect::Rect(busRect, { screenWidth / 2.0f, screenHeight / 1.6f + i * screenHeight * 0.067f }, 0.07);
+						car[i] = new Rect::Rect(busRect, { screenWidth / 2.0f, screenHeight / 1.6f + i * screenHeight * 0.067f }, 0.07, "Textures/truck.png");
 					}
 					else
 					{
-						car[i] = new Rect::Rect(carRect, { screenWidth / 2.0f, screenHeight / 1.6f + i * screenHeight * 0.067f }, 0.15 + i * speedVariation);
+						car[i] = new Rect::Rect(carRect, { screenWidth / 2.0f, screenHeight / 1.6f + i * screenHeight * 0.067f }, 0.15 + i * speedVariation, "Textures/greenCar.png");
 					}
 
 				}
 				else
 				{
-					car[i] = new Rect::Rect(carRect, { screenWidth / 2.0f, screenHeight / 1.6f + i * screenHeight * 0.067f }, -0.15 - i * speedVariation);
+					car[i] = new Rect::Rect(carRect, { screenWidth / 2.0f, screenHeight / 1.6f + i * screenHeight * 0.067f }, -0.15 - i * speedVariation, "Textures/blueCar.png");
 				}
 
 			}
+
+			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
+			lifeText.setFont(font);
+			lifeText.setPosition(700, 540);
+			lifeText.setCharacterSize(30);
+			lifeText.setFillColor(sf::Color::White);
 		}
 
 		void GameManager::Gameplay::UpdateRects(sf::RenderWindow& window, sf::Event& event)
 		{
+			lifeText.setString("Lifes: " + std::to_string(frog->GetLifes()));
 
 			for (int i = 0; i < carsCount; i++)
 			{
@@ -100,9 +114,10 @@ namespace GameManager
 					InitValues();
 					frog->SubstractLife();
 				}
-
 			}
+
 			isInWood = false;
+
 			for (int i = 0; i < woodsPerRow; i++)
 			{
 				woodsRow1[i]->Move(screenWidth);
@@ -113,8 +128,6 @@ namespace GameManager
 
 				if (GameManager::Gameplay::CheckLogsCollision())
 				{
-
-
 					if (frog->Collision(woodsRow2[i]->GetRectShape()))
 					{
 						frog->SetPosition({ frog->GetPosition().x - woodsRow2[0]->GetSpeed(),frog->GetPosition().y });
@@ -135,15 +148,13 @@ namespace GameManager
 					{
 						frog->SetPosition({ frog->GetPosition().x - woodsRow5[0]->GetSpeed(),frog->GetPosition().y });
 					}
-
 				}
 			}
+
 			for (int i = 0; i < goalsCount; i++)
 			{
-
 				if (frog->Collision(goals[i]->GetRectShape()))
 				{
-
 					if (!isGoalCollected[i])
 					{
 						frog->IncreaseGoalsCollected();
@@ -158,9 +169,23 @@ namespace GameManager
 							win = true;
 						}
 					}
-
-
 				}
+			}
+
+			frog->SetSpritePosition(frog->GetPosition());
+			
+			for (int i = 0; i < woodsPerRow; i++)
+			{
+				woodsRow1[i]->SetSpritePosition(woodsRow1[i]->GetPos());
+				woodsRow2[i]->SetSpritePosition(woodsRow2[i]->GetPos());
+				woodsRow3[i]->SetSpritePosition(woodsRow3[i]->GetPos());
+				woodsRow4[i]->SetSpritePosition(woodsRow4[i]->GetPos());
+				woodsRow5[i]->SetSpritePosition(woodsRow5[i]->GetPos());
+			}
+
+			for (int i = 0; i < carsCount; i++)
+			{
+				car[i]->SetSpritePosition(car[i]->GetPos());
 			}
 
 			if (!CheckLogsCollision() && frog->Collision(waterRect) && !CheckGoalsCollision())
@@ -183,42 +208,31 @@ namespace GameManager
 
 		}
 
-
 		void GameManager::Gameplay::Draw(sf::RenderWindow& window)
 		{
-
+			window.draw(waterHitBox->GetRectShape());
+			window.draw(gameplaySprite);
 			for (int i = 0; i < carsCount; i++)
 			{
-				window.draw(car[i]->GetRectShape());
-
+				window.draw(car[i]->GetRectSprite());
 			}
-
-			window.draw(waterHitBox->GetRectShape());
-
-
 			for (int i = 0; i < woodsPerRow; i++)
 			{
-				window.draw(woodsRow1[i]->GetRectShape());
-				window.draw(woodsRow2[i]->GetRectShape());
-				window.draw(woodsRow3[i]->GetRectShape());
-				window.draw(woodsRow4[i]->GetRectShape());
-				window.draw(woodsRow5[i]->GetRectShape());
-
+				window.draw(woodsRow1[i]->GetRectSprite());
+				window.draw(woodsRow2[i]->GetRectSprite());
+				window.draw(woodsRow3[i]->GetRectSprite());
+				window.draw(woodsRow4[i]->GetRectSprite());
+				window.draw(woodsRow5[i]->GetRectSprite());
 			}
+
 			frog->SetShapePosition();
-			window.draw(frog->GetFrogShape());
-			for (int i = 0; i < goalsCount; i++)
-			{
-				window.draw(goals[i]->GetRectShape());
-			}
 
-
+			window.draw(lifeText);
+			window.draw(frog->GetFrogSprite());
 		}
 
 		void UpdateFrog(sf::RenderWindow& window, sf::Event& event)
 		{
-
-
 			switch (event.type)
 			{
 			case sf::Event::KeyReleased:
@@ -242,9 +256,8 @@ namespace GameManager
 			default:
 				break;
 			}
-
-
 		}
+
 		bool GameManager::Gameplay::CheckLogsCollision()
 		{
 			bool collide = false;
@@ -253,12 +266,11 @@ namespace GameManager
 				if (frog->Collision(woodsRow1[i]->GetRectShape()) || frog->Collision(woodsRow2[i]->GetRectShape()) || frog->Collision(woodsRow3[i]->GetRectShape()) || frog->Collision(woodsRow4[i]->GetRectShape()) || frog->Collision(woodsRow5[i]->GetRectShape()))
 				{
 					collide = true;
-
 				}
-
 			}
 			return collide;
 		}
+
 		bool GameManager::Gameplay::CheckGoalsCollision()
 		{
 			bool collide = false;
@@ -269,7 +281,6 @@ namespace GameManager
 					collide = true;
 
 				}
-
 			}
 			return collide;
 		}
@@ -286,6 +297,7 @@ namespace GameManager
 
 		void GameManager::Gameplay::UnloadGameplay()
 		{
+
 		}
 	}
 }

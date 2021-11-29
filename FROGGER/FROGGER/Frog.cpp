@@ -8,10 +8,14 @@ GameManager::Frog::Frog::Frog(sf::RectangleShape frogShape, Vector2 pos, float s
 	this->speed = speed;
 	lifes = 5;
 	goalsCollected = 0;
+
+	frogTexture.loadFromFile("Textures/frog.png");
+	frogSprite.setTexture(frogTexture);
 }
 
 GameManager::Frog::Frog::~Frog()
 {
+
 }
 
 Vector2 GameManager::Frog::Frog::GetPosition()
@@ -79,6 +83,21 @@ void GameManager::Frog::Frog::IncreaseGoalsCollected()
 int GameManager::Frog::Frog::GetCollectedGoals()
 {
 	return goalsCollected;
+}
+
+sf::Texture GameManager::Frog::Frog::GetFrogTexture()
+{
+	return frogTexture;
+}
+
+sf::Sprite GameManager::Frog::Frog::GetFrogSprite()
+{
+	return frogSprite;
+}
+
+void GameManager::Frog::Frog::SetSpritePosition(Vector2 pos)
+{
+	frogSprite.setPosition({ pos.x, pos.y });
 }
 
 

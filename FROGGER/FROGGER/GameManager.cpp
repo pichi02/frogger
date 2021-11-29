@@ -17,7 +17,6 @@ namespace GameManager
 
 	void InitGame()
 	{
-	
 		GameManager::Menu::InitMenu();
 		GameManager::GameOver::InitGameOver();
 		GameManager::Credits::InitCredits();
@@ -77,6 +76,5 @@ namespace GameManager
 		InitGame();
 
 		GameManager();
-
 	}
 }

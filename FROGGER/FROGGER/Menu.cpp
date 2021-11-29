@@ -1,6 +1,6 @@
 #include "Menu.h"
 #include "GameManager.h"
-#include"Gameplay.h"
+#include "Gameplay.h"
 
 namespace GameManager
 {
@@ -39,29 +39,18 @@ namespace GameManager
 		static int halfScreenWidth = 0;
 		static int halfScreenHeight = 0;
 
-		//static sf::Image menuImage;
-		//static sf::Texture menuImageTexture;
+		static sf::Sprite menuSprite;
+		static sf::Texture menuImageTexture;
 		static float scaleBackground;
 
 		void InitMenu()
 		{
-			//menuImage.loadFromFile("../res/backgroundMenu.png");
-			//menuImageTexture = LoadTextureFromImage(menuImage);
+			menuImageTexture.loadFromFile("Textures/menuBackground.png");
+
+			menuSprite.setTexture(menuImageTexture);
+
 			halfScreenWidth = screenWidth / 2;
 			halfScreenHeight = screenHeight / 2;
-
-			/*sizeText2 = (screenWidth * 20) / scaleAux1;
-			sizeText3 = (screenWidth * 15) / scaleAux1;
-			text1PositionX = halfScreenWidth - MeasureText(text1, sizeText2) / 2;
-			text1PositionY = halfScreenHeight + GetScreenHeight() * 0.0333333;
-			text2PositionX = halfScreenWidth - MeasureText(text2, sizeText2) / 2;
-			text2PositionY = halfScreenHeight + GetScreenHeight() * 0.1333333;
-			text3PositionX = halfScreenWidth - MeasureText(text3, sizeText2) / 2;
-			text3PositionY = halfScreenHeight + GetScreenHeight() * 0.2333333;
-			text4PositionX = halfScreenWidth - MeasureText(text4, sizeText2) / 2;
-			text4PositionY = halfScreenHeight + GetScreenHeight() * 0.3333333;
-			text5PositionX = GetScreenWidth() * 0.05;
-			text5PositionY = GetScreenHeight() * 0.95;*/
 
 			rect1.setFillColor(sf::Color::Red);
 			rect2.setFillColor(sf::Color::Red);
@@ -80,7 +69,6 @@ namespace GameManager
 			rect4.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
 			rect4.setPosition(halfScreenWidth - rect4.getSize().x / 2, halfScreenHeight + screenHeight * 0.01);
 
-			//scaleBackground = (GetScreenWidth() * 1.0f) / scaleAux3;
 			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
 			startText.setFont(font);
 			startText.setString("START");
@@ -166,6 +154,7 @@ namespace GameManager
 
 		void DrawMenu(sf::RenderWindow& window)
 		{
+			window.draw(menuSprite);
 			window.draw(rect1);
 			window.draw(rect2);
 			window.draw(rect3);
@@ -174,7 +163,6 @@ namespace GameManager
 			window.draw(optionsText);
 			window.draw(creditsText);
 			window.draw(quitText);
-
 		}
 
 		void UnloadMenu()

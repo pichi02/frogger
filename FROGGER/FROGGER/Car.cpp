@@ -5,7 +5,17 @@ GameManager::Rect::Rect::Rect(sf::RectangleShape rectShape, Vector2 pos, float s
 	this->pos = pos;
 	this->rectShape = rectShape;
 	this->speed = speed;
-	
+}
+
+GameManager::Rect::Rect::Rect(sf::RectangleShape rectShape, Vector2 pos, float speed, std::string textureDirectory)
+{
+	this->pos = pos;
+	this->rectShape = rectShape;
+	this->speed = speed;
+	this->textureDirectory = textureDirectory;
+
+	texture.loadFromFile(textureDirectory);
+	sprite.setTexture(texture);
 }
 
 GameManager::Rect::Rect::~Rect()
@@ -45,4 +55,19 @@ void GameManager::Rect::Rect::SetPos(Vector2 pos)
 {
 	this->pos=pos;
 	rectShape.setPosition(pos.x, pos.y);
+}
+
+sf::Texture GameManager::Rect::Rect::GetRectTexture()
+{
+	return texture;
+}
+
+sf::Sprite GameManager::Rect::Rect::GetRectSprite()
+{
+	return sprite;
+}
+
+void GameManager::Rect::Rect::SetSpritePosition(Vector2 pos)
+{
+	sprite.setPosition({pos.x, pos.y});
 }

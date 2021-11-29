@@ -48,12 +48,19 @@ namespace GameManager
 		sf::Sprite goalCollectedFrogSprite[goalsCount];
 		sf::Texture goalCollectedFrogTexture[goalsCount];
 
+		
+
 		static sf::RectangleShape btnPause1;
 		static sf::RectangleShape btnPause2;
 
 		static sf::Vector2i mousePoint;
 		static sf::FloatRect mouseRect;
+		
+		sf::SoundBuffer jumpSoundBuffer;
+		sf::Sound jumpSound;
 
+		sf::Music gameplayMusic;
+		
 
 		void GameManager::Gameplay::InitValues()
 		{
@@ -63,8 +70,8 @@ namespace GameManager
 			btnPause2.setSize({ (10), (20)});
 
 			gameplayTexture.loadFromFile("Textures/froggerBackground.png");
-		
 			gameplaySprite.setTexture(gameplayTexture);
+
 			for (int i = 0; i < goalsCount; i++)
 			{
 				goalCollectedFrogTexture[i].loadFromFile("Textures/goalCollectedFrog.png");
@@ -72,6 +79,7 @@ namespace GameManager
 			}
 			
 			gameOver = false;
+			win = false;
 			speedVariation = 0.05f;
 			woodRect.setFillColor(sf::Color::Green);
 			frogRect.setFillColor(sf::Color::Transparent);
@@ -130,10 +138,18 @@ namespace GameManager
 			goalsCollectedText.setCharacterSize(30);
 			goalsCollectedText.setFillColor(sf::Color::Yellow);
 			goalsCollectedText.setStyle(sf::Text::Bold);
+
+			jumpSoundBuffer.loadFromFile("Sounds/frogJump.ogg");
+			jumpSound.setBuffer(jumpSoundBuffer);
+
+			gameplayMusic.openFromFile("Sounds/gameplaySong.wav");
+			playMusic();
+		
 		}
 
 		void GameManager::Gameplay::UpdateRects(sf::RenderWindow& window, sf::Event& event)
 		{
+			
 			mousePoint = sf::Mouse::getPosition(window);
 			mousePoint = (sf::Vector2i)window.mapPixelToCoords(mousePoint);
 			sf::FloatRect mouseRect(sf::Vector2f(mousePoint), { 32, 32 });
@@ -146,6 +162,7 @@ namespace GameManager
 				{
 					pause = true;
 					GameManager::currentScreen = GameManager::PAUSE;
+					gameplayMusic.pause();
 				}
 			}
 
@@ -157,6 +174,7 @@ namespace GameManager
 				{
 					pause = true;
 					GameManager::currentScreen = GameManager::PAUSE;
+					gameplayMusic.pause();
 				}
 			}
 
@@ -260,6 +278,7 @@ namespace GameManager
 				if (win)
 				{
 					currentScreen = GAMEOVER;
+
 				}
 				else if (gameOver)
 				{
@@ -312,18 +331,24 @@ namespace GameManager
 					{
 					case sf::Keyboard::W:
 						frog->MoveUp();
+						jumpSound.play();
 						break;
 					case sf::Keyboard::A:
+		
 						frog->MoveLeft();
+						jumpSound.play();
 						break;
 					case sf::Keyboard::S:
 						frog->MoveDown();
+						jumpSound.play();
 						break;
 					case sf::Keyboard::D:
 						frog->MoveRight();
+						jumpSound.play();
 						break;
 					default:
 						break;
+
 					}
 				default:
 					break;
@@ -355,6 +380,11 @@ namespace GameManager
 				}
 			}
 			return collide;
+		}
+
+		void GameManager::Gameplay::playMusic()
+		{
+			gameplayMusic.play();
 		}
 
 		void GameManager::Gameplay::ResetValues()

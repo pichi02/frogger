@@ -95,11 +95,12 @@ namespace GameManager
 
 			}
 
-			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
+			font.loadFromFile("Fonts/JungleAdventurer.ttf");
 			lifeText.setFont(font);
-			lifeText.setPosition(700, 540);
+			lifeText.setPosition(700, 560);
 			lifeText.setCharacterSize(30);
-			lifeText.setFillColor(sf::Color::White);
+			lifeText.setFillColor(sf::Color::Yellow);
+			lifeText.setStyle(sf::Text::Bold);
 		}
 
 		void GameManager::Gameplay::UpdateRects(sf::RenderWindow& window, sf::Event& event)

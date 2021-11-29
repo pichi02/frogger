@@ -69,28 +69,28 @@ namespace GameManager
 			rect4.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20)});
 			rect4.setPosition(halfScreenWidth - rect4.getSize().x / 2, halfScreenHeight + screenHeight * 0.01);
 
-			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
+			font.loadFromFile("Fonts/JungleAdventurer.ttf");
 			startText.setFont(font);
 			startText.setString("START");
-			startText.setPosition(rect4.getPosition());
+			startText.setPosition({ screenWidth / 2.0f - startText.getCharacterSize() - 10, screenHeight / 2.0f + 2 });
 			startText.setCharacterSize(30);
 			startText.setFillColor(sf::Color::White);
 
 			optionsText.setFont(font);
-			optionsText.setString("OPTIONS");
-			optionsText.setPosition(rect1.getPosition());
+			optionsText.setString("RULES");
+			optionsText.setPosition({ screenWidth / 2.0f - optionsText.getCharacterSize() - 20, screenHeight / 2.0f + 62 });
 			optionsText.setCharacterSize(30);
 			optionsText.setFillColor(sf::Color::White);
 
 			creditsText.setFont(font);
 			creditsText.setString("CREDITS");
-			creditsText.setPosition(rect2.getPosition());
+			creditsText.setPosition({ screenWidth / 2.0f - creditsText.getCharacterSize() - 20, screenHeight / 2.0f + 124 });
 			creditsText.setCharacterSize(30);
 			creditsText.setFillColor(sf::Color::White);
 
 			quitText.setFont(font);
 			quitText.setString("QUIT");
-			quitText.setPosition(rect3.getPosition());
+			quitText.setPosition({ screenWidth / 2.0f - quitText.getCharacterSize() - 10, screenHeight / 2.0f + 184 });
 			quitText.setCharacterSize(30);
 			quitText.setFillColor(sf::Color::White);
 

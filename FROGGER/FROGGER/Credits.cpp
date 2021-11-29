@@ -21,10 +21,10 @@ namespace GameManager
 			menuButtonRect.setSize({ (float)(screenWidth / 4), (float)(screenHeight / 20) });
 			menuButtonRect.setPosition(screenWidth * 0.7, screenHeight * 0.8);
 
-			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
+			font.loadFromFile("Fonts/JungleAdventurer.ttf");
 			menuText.setFont(font);
 			menuText.setString(returnToMenu);
-			menuText.setPosition(menuButtonRect.getPosition());
+			menuText.setPosition({ screenWidth * 0.84f - menuText.getCharacterSize() - 20.0f, screenHeight * 0.795f });
 			menuText.setCharacterSize(30);
 			menuText.setFillColor(sf::Color::White);
 		}

@@ -32,16 +32,16 @@ namespace GameManager
 			
 
 			//scaleBackground = (GetScreenWidth() * 1.0f) / scaleAux3;
-			font.loadFromFile("Fonts/AlexandriaFLF.ttf");
+			font.loadFromFile("Fonts/JungleAdventurer.ttf");
 			playText.setFont(font);
 			playText.setString("PLAY");
-			playText.setPosition(playButtonRect.getPosition());
+			playText.setPosition({ screenWidth * 0.18f, screenHeight * 0.795f });
 			playText.setCharacterSize(30);
 			playText.setFillColor(sf::Color::White);
 
 			menuText.setFont(font);
 			menuText.setString("MENU");
-			menuText.setPosition(menuButtonRect.getPosition());
+			menuText.setPosition({ screenWidth * 0.84f - menuText.getCharacterSize() - 20.0f, screenHeight * 0.795f });
 			menuText.setCharacterSize(30);
 			menuText.setFillColor(sf::Color::White);
 

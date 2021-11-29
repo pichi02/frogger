@@ -15,6 +15,9 @@ namespace GameManager
 		
 		sf::Font font;
 		sf::Text menuText;
+
+		sf::Texture creditsTexture;
+		sf::Sprite creditsSprite;
 		void GameManager::Credits::InitCredits()
 		{
 			menuButtonRect.setFillColor(sf::Color::Blue);
@@ -27,6 +30,8 @@ namespace GameManager
 			menuText.setPosition({ screenWidth * 0.84f - menuText.getCharacterSize() - 20.0f, screenHeight * 0.795f });
 			menuText.setCharacterSize(30);
 			menuText.setFillColor(sf::Color::White);
+			creditsTexture.loadFromFile("Textures/creditsBackground.png");
+			creditsSprite.setTexture(creditsTexture);
 		}
 
 		void GameManager::Credits::UpdateCredits(sf::RenderWindow& rWindow)
@@ -51,6 +56,7 @@ namespace GameManager
 
 		void GameManager::Credits::DrawCredits(sf::RenderWindow& window)
 		{
+			window.draw(creditsSprite);
 			window.draw(menuButtonRect);
 			window.draw(menuText);
 	

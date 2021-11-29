@@ -38,6 +38,7 @@ namespace GameManager
 
 		sf::Font font;
 		sf::Text lifeText;
+		sf::Text goalsCollectedText;
 
 		sf::Sprite gameplaySprite;
 		sf::Texture gameplayTexture;
@@ -97,15 +98,22 @@ namespace GameManager
 
 			font.loadFromFile("Fonts/JungleAdventurer.ttf");
 			lifeText.setFont(font);
-			lifeText.setPosition(700, 560);
+			lifeText.setPosition(screenWidth*0.87f, screenHeight*0.93f);
 			lifeText.setCharacterSize(30);
 			lifeText.setFillColor(sf::Color::Yellow);
 			lifeText.setStyle(sf::Text::Bold);
+
+			goalsCollectedText.setFont(font);
+			goalsCollectedText.setPosition(screenWidth*0.02f, screenHeight * 0.93f);
+			goalsCollectedText.setCharacterSize(30);
+			goalsCollectedText.setFillColor(sf::Color::Yellow);
+			goalsCollectedText.setStyle(sf::Text::Bold);
 		}
 
 		void GameManager::Gameplay::UpdateRects(sf::RenderWindow& window, sf::Event& event)
 		{
 			lifeText.setString("Lifes: " + std::to_string(frog->GetLifes()));
+			goalsCollectedText.setString("Collected goals: " + std::to_string(frog->GetCollectedGoals()));
 
 			for (int i = 0; i < carsCount; i++)
 			{
@@ -229,6 +237,7 @@ namespace GameManager
 			frog->SetShapePosition();
 
 			window.draw(lifeText);
+			window.draw(goalsCollectedText);
 			window.draw(frog->GetFrogSprite());
 		}
 

@@ -44,6 +44,7 @@ namespace GameManager
 			menuText.setPosition({ screenWidth * 0.84f - menuText.getCharacterSize() - 20.0f, screenHeight * 0.795f });
 			menuText.setCharacterSize(30);
 			menuText.setFillColor(sf::Color::White);
+			
 
 
 		}

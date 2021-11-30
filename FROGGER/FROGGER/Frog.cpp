@@ -63,11 +63,11 @@ void GameManager::Frog::Frog::SetPosition(Vector2 pos)
 }
 bool GameManager::Frog::Frog::Collision(sf::RectangleShape rect)
 {
-	return pos.x <= rect.getPosition().x + rect.getSize().x 
-		&& rect.getPosition().x <= pos.x + frogShape.getSize().x 
-		&& pos.y <= rect.getPosition().y + rect.getSize().y 
+	return pos.x <= rect.getPosition().x + rect.getSize().x
+		&& rect.getPosition().x <= pos.x + frogShape.getSize().x
+		&& pos.y <= rect.getPosition().y + rect.getSize().y
 		&& rect.getPosition().y <= pos.y + frogShape.getSize().y;
-	
+
 }
 
 void GameManager::Frog::Frog::SubstractLife()
@@ -98,6 +98,22 @@ sf::Sprite GameManager::Frog::Frog::GetFrogSprite()
 void GameManager::Frog::Frog::SetSpritePosition(Vector2 pos)
 {
 	frogSprite.setPosition({ pos.x, pos.y });
+}
+
+void GameManager::Frog::Frog::CheckWallCollision(int width, int height)
+{
+	if (pos.x >= width)
+	{
+		pos.x = width - frogShape.getSize().x;
+	}
+	else if (pos.x <= 0 - frogShape.getSize().x)
+	{
+		pos.x = 0;
+	}
+	if (pos.y >= height)
+	{
+		pos.y = height - frogShape.getSize().y;
+	}
 }
 
 

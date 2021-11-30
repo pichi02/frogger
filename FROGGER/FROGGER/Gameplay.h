@@ -6,9 +6,9 @@ namespace GameManager
 	namespace Gameplay
 	{
 		void InitValues();
-		void UpdateRects(sf::RenderWindow &window, sf::Event &event);
+		void Update(sf::RenderWindow &window, sf::Event &event);
 		void Draw(sf::RenderWindow& window);
-		void UpdateFrog(sf::RenderWindow& window, sf::Event& event);
+		void UpdateFrogMovement(sf::RenderWindow& window, sf::Event& event);
 		void ResetValues();
 		void UnloadGameplay();
 		bool CheckLogsCollision();

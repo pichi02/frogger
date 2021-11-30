@@ -147,7 +147,7 @@ namespace GameManager
 		
 		}
 
-		void GameManager::Gameplay::UpdateRects(sf::RenderWindow& window, sf::Event& event)
+		void GameManager::Gameplay::Update(sf::RenderWindow& window, sf::Event& event)
 		{
 			
 			mousePoint = sf::Mouse::getPosition(window);
@@ -271,6 +271,7 @@ namespace GameManager
 					InitValues();
 					frog->SubstractLife();
 				}
+				frog->CheckWallCollision(screenWidth,screenHeight);
 				if (frog->GetLifes() == 0)
 				{
 					gameOver = true;
@@ -320,7 +321,7 @@ namespace GameManager
 			window.draw(btnPause2);
 		}
 
-		void UpdateFrog(sf::RenderWindow& window, sf::Event& event)
+		void UpdateFrogMovement(sf::RenderWindow& window, sf::Event& event)
 		{
 			if (!pause)
 			{
@@ -354,6 +355,7 @@ namespace GameManager
 					break;
 				}
 			}
+			
 		}
 
 		bool GameManager::Gameplay::CheckLogsCollision()

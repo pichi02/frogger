@@ -41,7 +41,7 @@ namespace GameManager
 			sf::Texture GetFrogTexture();
 			sf::Sprite GetFrogSprite();
 			void SetSpritePosition(Vector2 pos);
-			
+			void CheckWallCollision(int width, int height);
 		};
 	}
 }

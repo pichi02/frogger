@@ -44,13 +44,13 @@ namespace GameManager
 			case GameManager::GAMEPLAY:
 				if (GameWindow.pollEvent(event))
 				{
-					GameManager::Gameplay::UpdateFrog(GameWindow, event);
+					GameManager::Gameplay::UpdateFrogMovement(GameWindow, event);
 					if (event.type == sf::Event::Closed)
 					{
 						isOpen = false;
 					}
 				}
-				GameManager::Gameplay::UpdateRects(GameWindow, event);
+				GameManager::Gameplay::Update(GameWindow, event);
 				GameManager::Gameplay::Draw(GameWindow);
 				break;
 

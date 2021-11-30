@@ -1,5 +1,5 @@
 #include "Gameplay.h"
-#include"Car.h"
+#include"Rect.h"
 #include"Frog.h"
 #include"GameManager.h"
 
@@ -143,6 +143,7 @@ namespace GameManager
 			jumpSound.setBuffer(jumpSoundBuffer);
 
 			gameplayMusic.openFromFile("Sounds/gameplaySong.wav");
+			gameplayMusic.setLoop(true);
 			playMusic();
 		
 		}

@@ -78,6 +78,7 @@ namespace GameManager
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					GameManager::Gameplay::ResetValues();
+					GameManager::Gameplay::InitValues();
 					currentScreen = GAMEPLAY;
 				}
 				

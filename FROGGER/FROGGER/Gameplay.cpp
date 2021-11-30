@@ -188,7 +188,7 @@ namespace GameManager
 					car[i]->Move(screenWidth);
 					if (frog->Collision(car[i]->GetRectShape()))
 					{
-						InitValues();
+						frog->SetPosition({ screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f });
 						frog->SubstractLife();
 					}
 				}
@@ -239,14 +239,18 @@ namespace GameManager
 							{
 								isGoalCollected[i] = true;
 
-								InitValues();
+								frog->SetPosition({ screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f });
 							}
 							else
 							{
 								win = true;
 							}
 						}
-
+						else if (isGoalCollected[i])
+						{
+							frog->SubstractLife();
+							frog->SetPosition({ screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f });
+						}
 					}
 				}
 
@@ -268,7 +272,7 @@ namespace GameManager
 
 				if (!CheckLogsCollision() && frog->Collision(waterRect) && !CheckGoalsCollision())
 				{
-					InitValues();
+					frog->SetPosition({ screenWidth / 2 - frogRect.getSize().x / 2,screenHeight * 0.96f });
 					frog->SubstractLife();
 				}
 				frog->CheckWallCollision(screenWidth,screenHeight);

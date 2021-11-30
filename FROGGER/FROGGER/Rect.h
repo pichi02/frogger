@@ -3,7 +3,7 @@
 #include"Vector2.h"
 namespace GameManager
 {
-	namespace Rect 
+	namespace Rect
 	{
 
 		class Rect
@@ -17,8 +17,8 @@ namespace GameManager
 			std::string textureDirectory;
 		public:
 			Rect(sf::RectangleShape rectShape, Vector2 pos, float speed);
-			Rect(sf::RectangleShape rectShape,Vector2 pos, float speed, std::string textureDirectory);
-			~Rect(); 
+			Rect(sf::RectangleShape rectShape, Vector2 pos, float speed, std::string textureDirectory);
+			~Rect();
 			Vector2 GetPos();
 			sf::RectangleShape GetRectShape();
 			float GetSpeed();

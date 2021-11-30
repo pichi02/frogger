@@ -1,6 +1,4 @@
 #include "GameManager.h"
-#include "Frog.h"
-#include "Car.h"
 #include "Menu.h"
 #include "Gameplay.h"
 #include "GameOver.h"

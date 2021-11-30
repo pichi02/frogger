@@ -152,7 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Car.cpp" />
     <ClCompile Include="Credits.cpp" />
     <ClCompile Include="Frog.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -161,11 +160,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Pause.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Rules.cpp" />
     <ClCompile Include="Victory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Car.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Frog.h" />
     <ClInclude Include="GameManager.h" />
@@ -173,6 +172,7 @@
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pause.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Victory.h" />

@@ -1,4 +1,4 @@
-#include "Car.h"
+#include "Rect.h"
 
 GameManager::Rect::Rect::Rect(sf::RectangleShape rectShape, Vector2 pos, float speed)
 {
@@ -41,11 +41,11 @@ void GameManager::Rect::Rect::Move(int screenWidth)
 {
 	rectShape.setPosition(pos.x, pos.y);
 	pos.x -= speed;
-	if (pos.x+rectShape.getSize().x<0)
+	if (pos.x + rectShape.getSize().x < 0)
 	{
 		pos.x = screenWidth;
 	}
-	else if (pos.x> screenWidth)
+	else if (pos.x > screenWidth)
 	{
 		pos.x = 0;
 	}
@@ -53,7 +53,7 @@ void GameManager::Rect::Rect::Move(int screenWidth)
 
 void GameManager::Rect::Rect::SetPos(Vector2 pos)
 {
-	this->pos=pos;
+	this->pos = pos;
 	rectShape.setPosition(pos.x, pos.y);
 }
 
@@ -69,5 +69,5 @@ sf::Sprite GameManager::Rect::Rect::GetRectSprite()
 
 void GameManager::Rect::Rect::SetSpritePosition(Vector2 pos)
 {
-	sprite.setPosition({pos.x, pos.y});
+	sprite.setPosition({ pos.x, pos.y });
 }

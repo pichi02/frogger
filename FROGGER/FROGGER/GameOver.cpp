@@ -18,7 +18,9 @@ namespace GameManager
 		sf::Text menuText;
 		sf::Text victoryText;
 		sf::Text loseText;
-		
+
+		sf::Texture backgroundTexture;
+		sf::Sprite backgroundSprite;
 		void InitGameOver()
 		{
 			
@@ -58,6 +60,9 @@ namespace GameManager
 			loseText.setPosition({ screenWidth * 0.37f, screenHeight * 0.3f });
 			loseText.setCharacterSize(50);
 			loseText.setFillColor(sf::Color::White);
+
+			backgroundTexture.loadFromFile("Textures/gameOverBackground.png");
+			backgroundSprite.setTexture(backgroundTexture);
 		}
 
 		void UpdateGameOver(sf::RenderWindow& rWindow)
@@ -95,6 +100,7 @@ namespace GameManager
 
 		void DrawGameOver(sf::RenderWindow& window)
 		{
+			window.draw(backgroundSprite);
 			window.draw(playButtonRect);
 			window.draw(menuButtonRect);
 			window.draw(menuText);
